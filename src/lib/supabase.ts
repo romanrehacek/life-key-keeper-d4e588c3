@@ -1,5 +1,6 @@
 
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
 
 // Document types
 export type DocumentType = 'household' | 'finance' | 'crypto' | 'family' | 'instructions';
@@ -26,10 +27,10 @@ export const documentsApi = {
         .order('updated_at', { ascending: false });
       
       if (error) throw error;
-      return data || [];
+      return data as Document[] || [];
     } catch (error) {
       console.error('Error fetching documents:', error);
-      return [];
+      return [] as Document[];
     }
   },
   
@@ -42,7 +43,7 @@ export const documentsApi = {
         .single();
       
       if (error) throw error;
-      return data;
+      return data as Document;
     } catch (error) {
       console.error(`Error fetching document with id ${id}:`, error);
       throw error;
@@ -64,7 +65,7 @@ export const documentsApi = {
         .single();
       
       if (error) throw error;
-      return data;
+      return data as Document;
     } catch (error) {
       console.error('Error creating document:', error);
       throw error;
@@ -84,7 +85,7 @@ export const documentsApi = {
         .single();
       
       if (error) throw error;
-      return data;
+      return data as Document;
     } catch (error) {
       console.error(`Error updating document with id ${id}:`, error);
       throw error;
