@@ -1,10 +1,21 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash, File, LockKeyhole, CalendarClock } from 'lucide-react';
+import { Edit, Trash, File, LockKeyhole, CalendarClock, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export interface DocumentProps {
   id: string;
@@ -13,6 +24,7 @@ export interface DocumentProps {
   type: 'household' | 'finance' | 'crypto' | 'family' | 'instructions';
   lastUpdated: string;
   recipients: number;
+  onDelete?: (id: string) => void;
 }
 
 const typeIcons = {
@@ -39,48 +51,95 @@ const typeLabels = {
   instructions: 'Čo robiť, ak...'
 };
 
-const Document = ({ id, title, description, type, lastUpdated, recipients }: DocumentProps) => {
+const Document = ({ id, title, description, type, lastUpdated, recipients, onDelete }: DocumentProps) => {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  
+  const handleDeleteClick = () => {
+    setShowDeleteDialog(true);
+  };
+  
+  const handleConfirmDelete = () => {
+    if (onDelete) {
+      onDelete(id);
+    }
+    setShowDeleteDialog(false);
+  };
+
   return (
-    <Card className="overflow-hidden transition-all hover:border-lifekey-teal/50 hover:shadow-md">
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-start">
-          <Badge variant="outline" className={cn("flex gap-1 items-center font-normal", typeColors[type])}>
-            {typeIcons[type]}
-            {typeLabels[type]}
-          </Badge>
-          <div className="flex items-center text-xs text-muted-foreground gap-1">
-            <LockKeyhole className="h-3 w-3" />
-            Šifrované
+    <>
+      <Card className="overflow-hidden transition-all hover:border-lifekey-teal/50 hover:shadow-md">
+        <CardHeader className="pb-2">
+          <div className="flex justify-between items-start">
+            <Badge variant="outline" className={cn("flex gap-1 items-center font-normal", typeColors[type])}>
+              {typeIcons[type]}
+              {typeLabels[type]}
+            </Badge>
+            <div className="flex items-center text-xs text-muted-foreground gap-1">
+              <LockKeyhole className="h-3 w-3" />
+              Šifrované
+            </div>
           </div>
-        </div>
-        <CardTitle className="mt-2">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent className="pb-2">
-        <div className="flex items-center text-xs text-muted-foreground gap-1">
-          <CalendarClock className="h-3 w-3" />
-          Aktualizované: {lastUpdated}
-        </div>
-        <div className="mt-2">
-          <Badge variant="secondary" className="text-xs">
-            {recipients} príjemcov
-          </Badge>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between pt-2">
-        <Button variant="outline" size="sm">
-          Otvoriť
-        </Button>
-        <div className="flex gap-2">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <Edit className="h-4 w-4" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
-            <Trash className="h-4 w-4" />
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+          <CardTitle className="mt-2">{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
+        </CardHeader>
+        <CardContent className="pb-2">
+          <div className="flex items-center text-xs text-muted-foreground gap-1">
+            <CalendarClock className="h-3 w-3" />
+            Aktualizované: {lastUpdated}
+          </div>
+          <div className="mt-2">
+            <Badge variant="secondary" className="text-xs">
+              {recipients} príjemcov
+            </Badge>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between pt-2">
+          <Link to={`/documents/${id}`}>
+            <Button variant="outline" size="sm">
+              Otvoriť
+            </Button>
+          </Link>
+          <div className="flex gap-2">
+            <Link to={`/documents/${id}/edit`}>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Edit className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8 text-destructive" 
+              onClick={handleDeleteClick}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+      
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertCircle className="h-5 w-5 text-destructive" />
+              Odstrániť dokument
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Naozaj chcete odstrániť dokument "{title}"? Táto akcia sa nedá vrátiť späť.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Zrušiť</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleConfirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Odstrániť
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 };
 
