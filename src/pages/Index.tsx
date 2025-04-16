@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
-import { ShieldCheck, Key, CheckCircle, FileText, Users, Activity } from "lucide-react";
+import { ShieldCheck, Key, CheckCircle, FileText, Users, Activity, ArrowRight } from "lucide-react"; // Added ArrowRight import
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Dashboard from '@/components/Dashboard';
