@@ -1,12 +1,5 @@
 
-import { createClient } from '@supabase/supabase-js';
-
-// Default values for local development
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project-url.supabase.co';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key';
-
-// Supabase client initialization with environment variables or defaults
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from '@/integrations/supabase/client';
 
 // Document types
 export type DocumentType = 'household' | 'finance' | 'crypto' | 'family' | 'instructions';
@@ -125,9 +118,9 @@ export const userSettingsApi = {
         .from('user_settings')
         .select('*')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
       
-      if (error && error.code !== 'PGRST116') throw error;
+      if (error) throw error;
       return data;
     } catch (error) {
       console.error('Error fetching user settings:', error);

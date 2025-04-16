@@ -15,16 +15,20 @@ const EditDocument = () => {
     queryKey: ['document', id],
     queryFn: () => documentsApi.getById(id as string),
     enabled: !!id,
-    retry: 1,
-    onError: (err: any) => {
-      console.error("Error fetching document:", err);
+    retry: 1
+  });
+
+  // Show error if document not found
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching document:", error);
       toast({
         title: "Dokument nenájdený",
         description: "Požadovaný dokument sa nepodarilo načítať.",
         variant: "destructive",
       });
     }
-  });
+  }, [isError, error, toast]);
 
   if (isLoading) {
     return (
