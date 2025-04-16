@@ -11,22 +11,20 @@ const EditDocument = () => {
   const { id } = useParams<{ id: string }>();
   const { toast } = useToast();
   
-  const { data: document, isLoading, isError } = useQuery({
+  const { data: document, isLoading, isError, error } = useQuery({
     queryKey: ['document', id],
     queryFn: () => documentsApi.getById(id as string),
-    enabled: !!id
-  });
-
-  // Show error if document not found
-  useEffect(() => {
-    if (isError) {
+    enabled: !!id,
+    retry: 1,
+    onError: (err: any) => {
+      console.error("Error fetching document:", err);
       toast({
         title: "Dokument nenájdený",
         description: "Požadovaný dokument sa nepodarilo načítať.",
         variant: "destructive",
       });
     }
-  }, [isError, toast]);
+  });
 
   if (isLoading) {
     return (
