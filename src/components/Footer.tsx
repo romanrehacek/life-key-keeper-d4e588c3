@@ -9,10 +9,10 @@ const Footer = () => {
       <div className="container-lg">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <Key className="h-6 w-6 text-lifekey-accent" />
               <span className="text-xl font-semibold tracking-tight">Životný kľúč</span>
-            </div>
+            </Link>
             <p className="text-sm text-gray-300">
               Zabezpečte, že vaši blízki dostanú dôležité informácie v prípade vašej nedostupnosti.
             </p>

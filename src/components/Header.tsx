@@ -1,12 +1,17 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Key, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
+  
+  const handleLogin = () => {
+    navigate('/');
+  };
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -32,7 +37,7 @@ const Header = () => {
           <Link to="/account" className="text-sm font-medium hover:text-lifekey-teal transition-colors">
             Účet
           </Link>
-          <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
+          <Button className="bg-lifekey-teal hover:bg-lifekey-blue" onClick={handleLogin}>
             Prihlásiť sa
           </Button>
         </nav>
@@ -98,7 +103,7 @@ const Header = () => {
           >
             Účet
           </Link>
-          <Button className="bg-lifekey-teal hover:bg-lifekey-blue w-full mt-4">
+          <Button className="bg-lifekey-teal hover:bg-lifekey-blue w-full mt-4" onClick={handleLogin}>
             Prihlásiť sa
           </Button>
         </nav>

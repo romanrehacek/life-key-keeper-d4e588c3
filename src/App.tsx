@@ -24,6 +24,8 @@ const App = () => (
           <Route path="/premium" element={<Index />} />
           <Route path="/privacy" element={<Index />} />
           <Route path="/terms" element={<Index />} />
+          <Route path="/cookies" element={<Index />} />
+          <Route path="/gdpr" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
