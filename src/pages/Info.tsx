@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -136,7 +135,7 @@ const Info = () => {
                 <div className="bg-card border rounded-lg p-6">
                   <h3 className="text-lg font-semibold mb-2">Čo sa stane, ak nereagujem na kontrolnú správu?</h3>
                   <p>
-                    Ak nereagujete na kontrolnú správu, systém sa pokúsi kontaktovať vás opakovane rôznymi kanálmi (e-mail, SMS). Ak nebudete reagovať po definovanú dobu (ktorú si môžete nastaviť), spustí sa bezpečnostný protokol a vaši príjemcovia dostanú prístup k určeným dokumentom.
+                    Ak nereagujete na kontrolnú správu, systém sa pokúsi kontaktovať vami opakovane rôznymi kanálmi (e-mail, SMS). Ak nebudete reagovať po definovanú dobu (ktorú si môžete nastaviť), spustí sa bezpečnostný protokol a vaši príjemcovia dostanú prístup k určeným dokumentom.
                   </p>
                 </div>
                 
@@ -183,7 +182,7 @@ const Info = () => {
                 </p>
                 <Button className="bg-lifekey-teal hover:bg-lifekey-blue" asChild>
                   <a href="mailto:info@zivotny-kluc.sk">
-                    <Help className="mr-2 h-4 w-4" />
+                    <HelpCircle className="mr-2 h-4 w-4" />
                     Kontaktovať podporu
                   </a>
                 </Button>
