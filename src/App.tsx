@@ -1,9 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
 import DocumentDetail from "./pages/DocumentDetail";
@@ -27,6 +27,11 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Info from "./pages/Info";
 import ContactPage from "./pages/ContactPage";
+import EditProfile from "./pages/EditProfile";
+import HowItWorks from "./pages/HowItWorks";
+import Security from "./pages/Security";
+import FAQ from "./pages/FAQ";
+import Documentation from "./pages/Documentation";
 
 const queryClient = new QueryClient();
 
@@ -45,7 +50,6 @@ const App = () => (
           <Route path="/account" element={<Account />} />
           <Route path="/premium" element={<Premium />} />
           
-          {/* Autentifikačné stránky */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -54,19 +58,22 @@ const App = () => (
           <Route path="/verify-phone" element={<VerifyPhone />} />
           <Route path="/setup-2fa" element={<Setup2FA />} />
           
-          {/* Informačné stránky */}
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/info" element={<Info />} />
           <Route path="/contact" element={<ContactPage />} />
           
-          {/* Právne stránky */}
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/gdpr" element={<GDPR />} />
           
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/security" element={<Security />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/documentation" element={<Documentation />} />
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,14 +1,15 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Bell, CheckCircle2, AlertCircle, Calendar, Clock } from 'lucide-react';
+import ActivitySettingsDialog from './ActivitySettingsDialog';
 
 const ActivityCheck = () => {
   const [activityProgress, setActivityProgress] = React.useState(70);
-  
+  const [activeDialog, setActiveDialog] = useState<'notifications' | 'waiting-period' | 'settings' | null>(null);
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold">Kontrola aktivity</h2>
@@ -136,6 +137,12 @@ const ActivityCheck = () => {
           </CardFooter>
         </Card>
       </div>
+      
+      <ActivitySettingsDialog
+        open={activeDialog !== null}
+        onClose={() => setActiveDialog(null)}
+        type={activeDialog || 'settings'}
+      />
     </div>
   );
 };

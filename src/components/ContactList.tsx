@@ -1,10 +1,10 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { User, UserPlus, Mail, Phone, Clock, File, Edit, Trash } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import ContactForm from './ContactForm';
 
 interface Contact {
   id: string;
@@ -47,6 +47,10 @@ const exampleContacts: Contact[] = [
 ];
 
 const ContactList = () => {
+  const [isAddContactOpen, setIsAddContactOpen] = useState(false);
+  const [isEditContactOpen, setIsEditContactOpen] = useState(false);
+  const [selectedContact, setSelectedContact] = useState<any>(null);
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -108,6 +112,18 @@ const ContactList = () => {
           </Card>
         ))}
       </div>
+
+      <ContactForm 
+        open={isAddContactOpen} 
+        onClose={() => setIsAddContactOpen(false)} 
+      />
+      
+      <ContactForm 
+        open={isEditContactOpen} 
+        onClose={() => setIsEditContactOpen(false)}
+        contact={selectedContact}
+        isEdit
+      />
     </div>
   );
 };
