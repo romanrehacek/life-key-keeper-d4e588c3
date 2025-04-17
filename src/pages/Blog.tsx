@@ -1,7 +1,16 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationLink, 
+  PaginationNext, 
+  PaginationPrevious 
+} from "@/components/ui/pagination";
+import { Helmet } from 'react-helmet';
 import PageTemplate from '@/components/PageTemplate';
 
 interface BlogPost {
@@ -54,20 +63,87 @@ const blogPosts: BlogPost[] = [
     category: "Návody",
     image: "https://images.unsplash.com/photo-1551290464-66cf567173d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
   },
+  {
+    id: "6",
+    title: "Bezpečnostné riziká v digitálnom svete",
+    excerpt: "Ako chrániť svoje digitálne aktíva pred hackermi a online podvodníkmi.",
+    date: "24.3.2025",
+    category: "Bezpečnosť",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "7",
+    title: "Prečo používať dvojfaktorovú autentifikáciu",
+    excerpt: "Vyššia úroveň zabezpečenia pre vaše online účty je nevyhnutnosťou v dnešnom svete.",
+    date: "20.3.2025",
+    category: "Bezpečnosť",
+    image: "https://images.unsplash.com/photo-1496096265110-f83ad7f96608?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "8",
+    title: "Ako nastaviť správne notifikácie v prípade núdze",
+    excerpt: "Nastavenie pravidelných kontrol a automatických upozornení pre vašich blízkych.",
+    date: "16.3.2025",
+    category: "Návody",
+    image: "https://images.unsplash.com/photo-1589149098258-3e9102cd63d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "9",
+    title: "Zálohovanie dát - prečo je dôležité a ako naň",
+    excerpt: "Stratégie a tipy na efektívne zálohovanie všetkých vašich dôležitých dát.",
+    date: "12.3.2025",
+    category: "Návody",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "10",
+    title: "Digitálne dedičstvo a rodinná pamäť",
+    excerpt: "Ako uchovať rodinné fotografie, videá a spomienky pre budúce generácie.",
+    date: "8.3.2025",
+    category: "Digitálne dedičstvo",
+    image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+  }
 ];
 
+const ITEMS_PER_PAGE = 6;
+
 const Blog = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  const totalPages = Math.ceil(blogPosts.length / ITEMS_PER_PAGE);
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+  const currentPosts = blogPosts.slice(indexOfFirstItem, indexOfLastItem);
+  
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top when page changes
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  
   return (
     <PageTemplate title="Blog">
+      <Helmet>
+        <title>Blog o digitálnom dedičstve | Životný kľúč</title>
+        <meta name="description" content="Novinky a články o digitálnom dedičstve, bezpečnosti online účtov a ochrane digitálnych aktív." />
+        <meta name="keywords" content="digitálne dedičstvo, online bezpečnosť, zabezpečenie účtov, životný kľúč" />
+      </Helmet>
+      
       <div className="space-y-8 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {blogPosts.slice(0, 1).map((post) => (
+          {currentPosts.slice(0, 1).map((post) => (
             <div key={post.id} className="col-span-1 md:col-span-2">
               <div className="relative group overflow-hidden rounded-xl">
                 <img 
                   src={post.image} 
                   alt={post.title} 
                   className="w-full h-96 object-cover transition duration-300 group-hover:scale-105"
+                  loading="eager"
+                  width="1200"
+                  height="600"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
                   <div className="text-white space-y-2">
@@ -90,12 +166,15 @@ const Blog = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.slice(1).map((post) => (
+          {currentPosts.slice(1).map((post) => (
             <div key={post.id} className="border rounded-lg overflow-hidden shadow-sm transition hover:shadow-md">
               <img 
                 src={post.image} 
                 alt={post.title} 
                 className="w-full h-48 object-cover"
+                loading="lazy"
+                width="400"
+                height="200"
               />
               <div className="p-6 space-y-4">
                 <div>
@@ -115,6 +194,41 @@ const Blog = () => {
             </div>
           ))}
         </div>
+        
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <Pagination className="mt-12">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious 
+                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                  className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  aria-disabled={currentPage === 1}
+                />
+              </PaginationItem>
+              
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink 
+                    isActive={currentPage === index + 1}
+                    onClick={() => handlePageChange(index + 1)}
+                    className="cursor-pointer"
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              
+              <PaginationItem>
+                <PaginationNext 
+                  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+                  className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  aria-disabled={currentPage === totalPages}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
       </div>
     </PageTemplate>
   );

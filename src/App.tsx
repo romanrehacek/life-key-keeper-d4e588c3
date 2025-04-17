@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
+import DocumentDetail from "./pages/DocumentDetail";
 import Contacts from "./pages/Contacts";
 import Activity from "./pages/Activity";
 import Account from "./pages/Account";
@@ -25,6 +26,7 @@ import Setup2FA from "./pages/Setup2FA";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Info from "./pages/Info";
+import ContactPage from "./pages/ContactPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/documents" element={<Documents />} />
+          <Route path="/document/:id" element={<DocumentDetail />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/account" element={<Account />} />
@@ -55,6 +58,7 @@ const App = () => (
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/info" element={<Info />} />
+          <Route path="/contact" element={<ContactPage />} />
           
           {/* Právne stránky */}
           <Route path="/privacy" element={<Privacy />} />

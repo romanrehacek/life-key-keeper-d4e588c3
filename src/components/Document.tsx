@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Edit, Trash, File, LockKeyhole, CalendarClock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 export interface DocumentProps {
   id: string;
@@ -68,8 +69,10 @@ const Document = ({ id, title, description, type, lastUpdated, recipients }: Doc
         </div>
       </CardContent>
       <CardFooter className="flex justify-between pt-2">
-        <Button variant="outline" size="sm">
-          Otvoriť
+        <Button variant="outline" size="sm" asChild>
+          <Link to={`/document/${id}`}>
+            Otvoriť
+          </Link>
         </Button>
         <div className="flex gap-2">
           <Button variant="ghost" size="icon" className="h-8 w-8">
