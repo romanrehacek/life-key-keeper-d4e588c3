@@ -32,6 +32,7 @@ import HowItWorks from "./pages/HowItWorks";
 import Security from "./pages/Security";
 import FAQ from "./pages/FAQ";
 import Documentation from "./pages/Documentation";
+import DocumentEdit from "./pages/DocumentEdit";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/document/:id" element={<DocumentDetail />} />
+          <Route path="/document/:id/edit" element={<DocumentEdit />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/account" element={<Account />} />

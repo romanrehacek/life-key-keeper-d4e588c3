@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -97,7 +98,13 @@ const ActivityCheck = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">Upraviť nastavenia</Button>
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              onClick={() => setActiveDialog('settings')}
+            >
+              Upraviť nastavenia
+            </Button>
           </CardFooter>
         </Card>
         
@@ -115,7 +122,13 @@ const ActivityCheck = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">Upraviť čakaciu dobu</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => setActiveDialog('waiting-period')}
+            >
+              Upraviť čakaciu dobu
+            </Button>
           </CardFooter>
         </Card>
         
@@ -133,7 +146,13 @@ const ActivityCheck = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button variant="outline" className="w-full">Upraviť upozornenia</Button>
+            <Button 
+              variant="outline" 
+              className="w-full"
+              onClick={() => setActiveDialog('notifications')}
+            >
+              Upraviť upozornenia
+            </Button>
           </CardFooter>
         </Card>
       </div>

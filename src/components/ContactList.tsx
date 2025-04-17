@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -49,13 +50,21 @@ const exampleContacts: Contact[] = [
 const ContactList = () => {
   const [isAddContactOpen, setIsAddContactOpen] = useState(false);
   const [isEditContactOpen, setIsEditContactOpen] = useState(false);
-  const [selectedContact, setSelectedContact] = useState<any>(null);
+  const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+
+  const handleEditContact = (contact: Contact) => {
+    setSelectedContact(contact);
+    setIsEditContactOpen(true);
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">Kontakty pre núdzové situácie</h2>
-        <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
+        <Button 
+          className="bg-lifekey-teal hover:bg-lifekey-blue"
+          onClick={() => setIsAddContactOpen(true)}
+        >
           <UserPlus className="h-4 w-4 mr-2" />
           Pridať kontakt
         </Button>
@@ -97,11 +106,20 @@ const ContactList = () => {
               </div>
             </CardContent>
             <CardFooter className="flex justify-between pt-2">
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => handleEditContact(contact)}
+              >
                 Nastavenia
               </Button>
               <div className="flex gap-2">
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="h-8 w-8"
+                  onClick={() => handleEditContact(contact)}
+                >
                   <Edit className="h-4 w-4" />
                 </Button>
                 <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
@@ -120,8 +138,11 @@ const ContactList = () => {
       
       <ContactForm 
         open={isEditContactOpen} 
-        onClose={() => setIsEditContactOpen(false)}
-        contact={selectedContact}
+        onClose={() => {
+          setIsEditContactOpen(false);
+          setSelectedContact(null);
+        }}
+        contact={selectedContact || undefined}
         isEdit
       />
     </div>
