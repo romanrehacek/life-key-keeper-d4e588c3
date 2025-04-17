@@ -15,6 +15,16 @@ import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
 import GDPR from "./pages/GDPR";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
+import VerifyPhone from "./pages/VerifyPhone";
+import Setup2FA from "./pages/Setup2FA";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
+import Info from "./pages/Info";
 
 const queryClient = new QueryClient();
 
@@ -31,10 +41,27 @@ const App = () => (
           <Route path="/activity" element={<Activity />} />
           <Route path="/account" element={<Account />} />
           <Route path="/premium" element={<Premium />} />
+          
+          {/* Autentifikačné stránky */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/verify-phone" element={<VerifyPhone />} />
+          <Route path="/setup-2fa" element={<Setup2FA />} />
+          
+          {/* Informačné stránky */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+          <Route path="/info" element={<Info />} />
+          
+          {/* Právne stránky */}
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/gdpr" element={<GDPR />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

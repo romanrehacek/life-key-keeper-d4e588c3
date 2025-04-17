@@ -1,17 +1,43 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Key, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Check if user is authenticated and in dashboard area
+  // For this demo version, we'll consider dashboard paths to be documents, contacts, activity, account
+  const isDashboardPath = ['/documents', '/contacts', '/activity', '/account'].includes(location.pathname);
+  
+  // For demo purposes, assume user is not authenticated
+  const isAuthenticated = false;
   
   const handleLogin = () => {
-    navigate('/');
+    navigate('/login');
   };
+
+  // Public navigation links (when not logged in)
+  const publicNavLinks = [
+    { name: "Info", path: "/info" },
+    { name: "Blog", path: "/blog" },
+    { name: "Premium", path: "/premium" },
+  ];
+
+  // Dashboard navigation links (when logged in)
+  const dashboardNavLinks = [
+    { name: "Dokumenty", path: "/documents" },
+    { name: "Kontakty", path: "/contacts" },
+    { name: "Aktivita", path: "/activity" },
+    { name: "Účet", path: "/account" },
+  ];
+  
+  // Determine which set of links to show
+  const navLinks = isDashboardPath || isAuthenticated ? dashboardNavLinks : publicNavLinks;
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -25,21 +51,29 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/documents" className="text-sm font-medium hover:text-lifekey-teal transition-colors">
-            Dokumenty
-          </Link>
-          <Link to="/contacts" className="text-sm font-medium hover:text-lifekey-teal transition-colors">
-            Kontakty
-          </Link>
-          <Link to="/activity" className="text-sm font-medium hover:text-lifekey-teal transition-colors">
-            Aktivita
-          </Link>
-          <Link to="/account" className="text-sm font-medium hover:text-lifekey-teal transition-colors">
-            Účet
-          </Link>
-          <Button className="bg-lifekey-teal hover:bg-lifekey-blue" onClick={handleLogin}>
-            Prihlásiť sa
-          </Button>
+          {navLinks.map((link) => (
+            <Link 
+              key={link.path}
+              to={link.path} 
+              className={cn(
+                "text-sm font-medium transition-colors",
+                location.pathname === link.path 
+                  ? "text-lifekey-teal" 
+                  : "hover:text-lifekey-teal"
+              )}
+            >
+              {link.name}
+            </Link>
+          ))}
+          {isAuthenticated ? (
+            <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
+              Odhlásiť sa
+            </Button>
+          ) : (
+            <Button className="bg-lifekey-teal hover:bg-lifekey-blue" onClick={handleLogin}>
+              Prihlásiť sa
+            </Button>
+          )}
         </nav>
         
         {/* Mobile menu button */}
@@ -75,37 +109,30 @@ const Header = () => {
           </Button>
         </div>
         <nav className="flex flex-col p-6 space-y-4">
-          <Link 
-            to="/documents" 
-            className="py-2 text-lg font-medium hover:text-lifekey-teal transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Dokumenty
-          </Link>
-          <Link 
-            to="/contacts" 
-            className="py-2 text-lg font-medium hover:text-lifekey-teal transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Kontakty
-          </Link>
-          <Link 
-            to="/activity" 
-            className="py-2 text-lg font-medium hover:text-lifekey-teal transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Aktivita
-          </Link>
-          <Link 
-            to="/account" 
-            className="py-2 text-lg font-medium hover:text-lifekey-teal transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Účet
-          </Link>
-          <Button className="bg-lifekey-teal hover:bg-lifekey-blue w-full mt-4" onClick={handleLogin}>
-            Prihlásiť sa
-          </Button>
+          {navLinks.map((link) => (
+            <Link 
+              key={link.path}
+              to={link.path} 
+              className={cn(
+                "py-2 text-lg font-medium transition-colors",
+                location.pathname === link.path 
+                  ? "text-lifekey-teal" 
+                  : "hover:text-lifekey-teal"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
+          {isAuthenticated ? (
+            <Button className="bg-lifekey-teal hover:bg-lifekey-blue w-full mt-4">
+              Odhlásiť sa
+            </Button>
+          ) : (
+            <Button className="bg-lifekey-teal hover:bg-lifekey-blue w-full mt-4" onClick={handleLogin}>
+              Prihlásiť sa
+            </Button>
+          )}
         </nav>
       </div>
     </header>
