@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, Loader2, HelpCircle } from "lucide-react";
 import PageTemplate from '@/components/PageTemplate';
 import { 
   InputOTP,
@@ -184,14 +184,13 @@ const Setup2FA = () => {
                   maxLength={6} 
                   value={code}
                   onChange={(value) => setCode(value)}
-                  render={({ slots }) => (
-                    <InputOTPGroup>
-                      {slots.map((slot, index) => (
-                        <InputOTPSlot key={index} {...slot} index={index} />
-                      ))}
-                    </InputOTPGroup>
-                  )}
-                />
+                >
+                  <InputOTPGroup>
+                    {Array.from({ length: 6 }, (_, i) => (
+                      <InputOTPSlot key={i} index={i} />
+                    ))}
+                  </InputOTPGroup>
+                </InputOTP>
               </div>
               <p className="text-xs text-center text-muted-foreground mt-2">
                 Zadajte 6-miestny kód z vašej autentifikačnej aplikácie

@@ -1,8 +1,7 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
@@ -108,20 +107,18 @@ const VerifyPhone = () => {
           
           <form onSubmit={handleVerify} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="verification-code">Overovací kód</Label>
               <div className="flex justify-center">
                 <InputOTP 
                   maxLength={6} 
                   value={code}
                   onChange={(value) => setCode(value)}
-                  render={({ slots }) => (
-                    <InputOTPGroup>
-                      {slots.map((slot, index) => (
-                        <InputOTPSlot key={index} {...slot} index={index} />
-                      ))}
-                    </InputOTPGroup>
-                  )}
-                />
+                >
+                  <InputOTPGroup>
+                    {Array.from({ length: 6 }, (_, i) => (
+                      <InputOTPSlot key={i} index={i} />
+                    ))}
+                  </InputOTPGroup>
+                </InputOTP>
               </div>
               <p className="text-xs text-center text-muted-foreground mt-2">
                 Pre demo použite kód: 123456
