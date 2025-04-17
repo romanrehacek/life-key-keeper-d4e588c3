@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -43,8 +42,7 @@ const ResetPassword = () => {
       setTimeout(() => {
         toast({
           title: "Heslo úspešne zmenené",
-          description: "Teraz sa môžete prihlásiť s novým heslom.",
-          icon: <CheckCircle2 className="h-5 w-5 text-green-500" />
+          description: "Teraz sa môžete prihlásiť s novým heslom."
         });
         navigate("/login");
         setIsLoading(false);

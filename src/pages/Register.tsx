@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/components/ui/use-toast";
-import { AlertCircle, CheckCircle2 } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import PageTemplate from '@/components/PageTemplate';
 
 const Register = () => {
@@ -38,8 +37,7 @@ const Register = () => {
       setTimeout(() => {
         toast({
           title: "Registrácia úspešná",
-          description: "Poslali sme vám potvrdzovací e-mail na dokončenie registrácie.",
-          icon: <CheckCircle2 className="h-5 w-5 text-green-500" />
+          description: "Poslali sme vám potvrdzovací e-mail na dokončenie registrácie."
         });
         navigate("/verify-email");
         setIsLoading(false);

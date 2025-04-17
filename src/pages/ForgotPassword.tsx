@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -29,8 +28,7 @@ const ForgotPassword = () => {
       setTimeout(() => {
         toast({
           title: "E-mail odoslaný",
-          description: "Pokyny na obnovenie hesla boli odoslané na vašu e-mailovú adresu.",
-          icon: <CheckCircle2 className="h-5 w-5 text-green-500" />
+          description: "Pokyny na obnovenie hesla boli odoslané na vašu e-mailovú adresu."
         });
         setIsSubmitted(true);
         setIsLoading(false);

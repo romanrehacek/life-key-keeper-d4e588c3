@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -43,8 +42,7 @@ const VerifyPhone = () => {
           setIsVerified(true);
           toast({
             title: "Telefónne číslo overené",
-            description: "Vaše telefónne číslo bolo úspešne overené.",
-            icon: <CheckCircle2 className="h-5 w-5 text-green-500" />
+            description: "Vaše telefónne číslo bolo úspešne overené."
           });
         } else {
           setError("Nesprávny overovací kód. Skúste to znova.");
@@ -61,7 +59,7 @@ const VerifyPhone = () => {
     // Simulate resending code
     toast({
       title: "Kód odoslaný",
-      description: "Nový overovací kód bol odoslaný na vaše telefónne číslo.",
+      description: "Nový overovací kód bol odoslaný na vaše telefónne číslo."
     });
   };
 

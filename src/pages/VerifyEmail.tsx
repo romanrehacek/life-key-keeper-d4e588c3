@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -23,7 +22,7 @@ const VerifyEmail = () => {
     setTimeout(() => {
       toast({
         title: "E-mail odoslaný",
-        description: "Potvrdzovací e-mail bol odoslaný znova.",
+        description: "Potvrdzovací e-mail bol odoslaný znova."
       });
       setIsLoading(false);
     }, 1000);
@@ -39,8 +38,7 @@ const VerifyEmail = () => {
         setIsLoading(false);
         toast({
           title: "E-mail overený",
-          description: "Vaša e-mailová adresa bola úspešne overená.",
-          icon: <CheckCircle2 className="h-5 w-5 text-green-500" />
+          description: "Vaša e-mailová adresa bola úspešne overená."
         });
       }, 1500);
     }
