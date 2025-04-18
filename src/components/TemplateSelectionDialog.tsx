@@ -17,9 +17,10 @@ import { useLanguage } from "@/contexts/LanguageContext";
 interface TemplatePreviewProps {
   template: DocumentTemplate;
   onSelect: (template: DocumentTemplate) => void;
+  onPreview: (template: DocumentTemplate) => void;
 }
 
-const TemplatePreview: React.FC<TemplatePreviewProps> = ({ template, onSelect }) => {
+const TemplatePreview: React.FC<TemplatePreviewProps> = ({ template, onSelect, onPreview }) => {
   const { t } = useLanguage();
 
   return (
@@ -27,16 +28,14 @@ const TemplatePreview: React.FC<TemplatePreviewProps> = ({ template, onSelect })
       <h3 className="font-medium text-lg mb-1">{template.title}</h3>
       <p className="text-muted-foreground text-sm mb-3">{template.description}</p>
       <div className="flex justify-end">
-        <DialogClose asChild>
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="mr-2"
-            onClick={() => {}}
-          >
-            {t("document.edit.preview")}
-          </Button>
-        </DialogClose>
+        <Button 
+          variant="outline" 
+          size="sm"
+          className="mr-2"
+          onClick={() => onPreview(template)}
+        >
+          {t("document.edit.preview")}
+        </Button>
         <DialogClose asChild>
           <Button 
             size="sm"
@@ -92,6 +91,7 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
                   key={template.id}
                   template={template}
                   onSelect={onSelectTemplate}
+                  onPreview={setPreviewTemplate}
                 />
               ))}
             </div>

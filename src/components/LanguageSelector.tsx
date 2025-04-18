@@ -18,8 +18,9 @@ const LanguageSelector = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 px-0">
+        <Button variant="ghost" size="sm" className="flex items-center gap-1 h-8 px-2">
           <Globe className="h-4 w-4" />
+          <span className="hidden sm:inline">{currentLanguage?.nativeName}</span>
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>

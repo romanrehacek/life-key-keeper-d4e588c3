@@ -27,8 +27,8 @@ const DocumentEdit = () => {
   
   const handleSave = () => {
     toast({
-      title: "Document saved",
-      description: "Your document has been saved successfully."
+      title: t("document.edit.saved"),
+      description: t("document.edit.savedDescription")
     });
     navigate(`/document/${id}`);
   };
@@ -40,8 +40,8 @@ const DocumentEdit = () => {
   const handleSelectTemplate = (template: DocumentTemplate) => {
     setDocumentContent(template.content);
     toast({
-      title: "Template applied",
-      description: `The template "${template.title}" has been applied to your document.`
+      title: t("document.edit.templateApplied"),
+      description: `${t("document.edit.templateAppliedDescription")} "${template.title}"`
     });
   };
 
@@ -84,11 +84,11 @@ const DocumentEdit = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="household">Domácnosť</SelectItem>
-                    <SelectItem value="finance">Financie</SelectItem>
-                    <SelectItem value="crypto">Kryptomeny</SelectItem>
-                    <SelectItem value="family">Rodina a kontakty</SelectItem>
-                    <SelectItem value="instructions">Čo robiť, ak...</SelectItem>
+                    <SelectItem value="household">{t("document.types.household")}</SelectItem>
+                    <SelectItem value="finance">{t("document.types.finance")}</SelectItem>
+                    <SelectItem value="crypto">{t("document.types.crypto")}</SelectItem>
+                    <SelectItem value="family">{t("document.types.family")}</SelectItem>
+                    <SelectItem value="instructions">{t("document.types.instructions")}</SelectItem>
                   </SelectContent>
                 </Select>
                 
