@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   Bold, 
@@ -13,7 +12,7 @@ import {
   AlignCenter,
   AlignRight,
   Code,
-  PaperClip,
+  Paperclip,
   Image,
   FileText,
   Trash2
@@ -239,7 +238,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               onClick={() => fileInputRef.current?.click()}
               title="Attach File"
             >
-              <PaperClip className="h-4 w-4" />
+              <Paperclip className="h-4 w-4" />
             </Button>
             <input 
               type="file"
@@ -292,7 +291,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     onClick={() => insertImageLink(attachment)}
                     title="Insert into document"
                   >
-                    <PaperClip className="h-3 w-3" />
+                    <Paperclip className="h-3 w-3" />
                   </Button>
                   <Button
                     type="button"
