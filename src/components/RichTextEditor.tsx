@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { 
   Bold, 
@@ -15,13 +16,20 @@ import {
   Paperclip,
   Image,
   FileText,
-  Trash2
+  Trash2,
+  Palette
 } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface FileAttachment {
   id: string;
@@ -82,6 +90,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }
   };
 
+  const applyTextColor = (color: string) => {
+    applyFormatting(`<span style="color: ${color}">`, '</span>');
+  };
+
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -129,126 +141,152 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     return <FileText className="h-4 w-4" />;
   };
 
+  // Formatting toolbar component to reuse in both tabs
+  const FormattingToolbar = () => (
+    <div className="flex flex-wrap items-center gap-1 p-1 bg-muted/30 rounded-md">
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("**", "**")}
+        title="Bold"
+      >
+        <Bold className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("*", "*")}
+        title="Italic"
+      >
+        <Italic className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("__", "__")}
+        title="Underline"
+      >
+        <Underline className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("`", "`")}
+        title="Code"
+      >
+        <Code className="h-4 w-4" />
+      </Button>
+      
+      <Separator orientation="vertical" className="h-6" />
+      
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("# ")}
+        title="Heading 1"
+      >
+        <Heading1 className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("## ")}
+        title="Heading 2"
+      >
+        <Heading2 className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("### ")}
+        title="Heading 3"
+      >
+        <Heading3 className="h-4 w-4" />
+      </Button>
+      
+      <Separator orientation="vertical" className="h-6" />
+      
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("- ")}
+        title="Bullet List"
+      >
+        <List className="h-4 w-4" />
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={() => applyFormatting("1. ")}
+        title="Numbered List"
+      >
+        <ListOrdered className="h-4 w-4" />
+      </Button>
+      
+      <Separator orientation="vertical" className="h-6" />
+      
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            title="Text Color"
+          >
+            <Palette className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => applyTextColor('inherit')}>
+            <div className="w-4 h-4 mr-2 border border-gray-300 bg-transparent"></div>
+            {t("editor.default")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => applyTextColor('red')}>
+            <div className="w-4 h-4 mr-2 bg-red-500 rounded-sm"></div>
+            {t("editor.red")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => applyTextColor('blue')}>
+            <div className="w-4 h-4 mr-2 bg-blue-500 rounded-sm"></div>
+            {t("editor.blue")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => applyTextColor('green')}>
+            <div className="w-4 h-4 mr-2 bg-green-500 rounded-sm"></div>
+            {t("editor.green")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => applyTextColor('yellow')}>
+            <div className="w-4 h-4 mr-2 bg-yellow-500 rounded-sm"></div>
+            {t("editor.yellow")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => applyTextColor('purple')}>
+            <div className="w-4 h-4 mr-2 bg-purple-500 rounded-sm"></div>
+            {t("editor.purple")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      
+      <div className="flex-1"></div>
+    </div>
+  );
+
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
       <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'visual' | 'markdown')}>
         <TabsList className="mb-2">
-          <TabsTrigger value="visual">Visual Editor</TabsTrigger>
-          <TabsTrigger value="markdown">Markdown</TabsTrigger>
+          <TabsTrigger value="visual">{t("editor.visualMode")}</TabsTrigger>
+          <TabsTrigger value="markdown">{t("editor.markdownMode")}</TabsTrigger>
         </TabsList>
         
         <TabsContent value="visual" className="space-y-2">
-          <div className="flex flex-wrap items-center gap-1 p-1 bg-muted/30 rounded-md">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("**", "**")}
-              title="Bold"
-            >
-              <Bold className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("*", "*")}
-              title="Italic"
-            >
-              <Italic className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("__", "__")}
-              title="Underline"
-            >
-              <Underline className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("`", "`")}
-              title="Code"
-            >
-              <Code className="h-4 w-4" />
-            </Button>
-            
-            <Separator orientation="vertical" className="h-6" />
-            
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("# ")}
-              title="Heading 1"
-            >
-              <Heading1 className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("## ")}
-              title="Heading 2"
-            >
-              <Heading2 className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("### ")}
-              title="Heading 3"
-            >
-              <Heading3 className="h-4 w-4" />
-            </Button>
-            
-            <Separator orientation="vertical" className="h-6" />
-            
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("- ")}
-              title="Bullet List"
-            >
-              <List className="h-4 w-4" />
-            </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => applyFormatting("1. ")}
-              title="Numbered List"
-            >
-              <ListOrdered className="h-4 w-4" />
-            </Button>
-            
-            <Separator orientation="vertical" className="h-6" />
-            
-            <div className="flex-1"></div>
-            
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => fileInputRef.current?.click()}
-              title="Attach File"
-            >
-              <Paperclip className="h-4 w-4" />
-            </Button>
-            <input 
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileUpload}
-              className="hidden"
-              multiple
-              accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.txt,.rtf"
-            />
-          </div>
+          <FormattingToolbar />
           
           <Textarea
             ref={textAreaRef}
@@ -260,22 +298,45 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           />
         </TabsContent>
         
-        <TabsContent value="markdown">
+        <TabsContent value="markdown" className="space-y-2">
+          <FormattingToolbar />
+          
           <Textarea
             ref={textAreaRef}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onSelect={handleTextSelection}
             onClick={handleTextSelection}
-            className="min-h-[460px] font-mono text-sm"
+            className="min-h-[400px] font-mono text-sm"
           />
         </TabsContent>
       </Tabs>
       
-      {attachments.length > 0 && (
-        <div className="border rounded p-2">
-          <h4 className="text-sm font-medium mb-2">Attachments</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+      <div className="flex flex-col space-y-2 border-t pt-3 mt-3">
+        <div className="flex items-center justify-between">
+          <h4 className="text-sm font-medium">{t("document.edit.attachments")}</h4>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+            title={t("document.edit.attachFile")}
+          >
+            <Paperclip className="h-4 w-4 mr-1" />
+            {t("document.edit.attachFile")}
+          </Button>
+          <input 
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            className="hidden"
+            multiple
+            accept="image/*,application/pdf,.doc,.docx,.xls,.xlsx,.txt,.rtf"
+          />
+        </div>
+        
+        {attachments.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-2">
             {attachments.map((attachment) => (
               <div key={attachment.id} className="flex items-center justify-between border rounded p-2 text-sm">
                 <div className="flex items-center overflow-hidden">
@@ -289,7 +350,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     size="sm"
                     className="h-6 w-6 p-0"
                     onClick={() => insertImageLink(attachment)}
-                    title="Insert into document"
+                    title={t("document.edit.insertIntoDocument")}
                   >
                     <Paperclip className="h-3 w-3" />
                   </Button>
@@ -299,7 +360,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     size="sm"
                     className="h-6 w-6 p-0 text-destructive hover:text-destructive/90"
                     onClick={() => removeAttachment(attachment.id)}
-                    title="Remove attachment"
+                    title={t("document.edit.removeAttachment")}
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>
@@ -307,8 +368,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

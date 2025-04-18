@@ -68,6 +68,11 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
   const [open, setOpen] = React.useState(false);
   const [previewTemplate, setPreviewTemplate] = React.useState<DocumentTemplate | null>(null);
 
+  const handleSelectTemplate = (template: DocumentTemplate) => {
+    onSelectTemplate(template);
+    setOpen(false); // Close the main dialog when selecting a template
+  };
+
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
@@ -90,7 +95,7 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
                 <TemplatePreview 
                   key={template.id}
                   template={template}
-                  onSelect={onSelectTemplate}
+                  onSelect={handleSelectTemplate}
                   onPreview={setPreviewTemplate}
                 />
               ))}
@@ -119,14 +124,12 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
               <Button variant="outline" onClick={() => setPreviewTemplate(null)}>
                 {t("document.edit.cancel")}
               </Button>
-              <DialogClose asChild>
-                <Button onClick={() => {
-                  onSelectTemplate(previewTemplate);
-                  setPreviewTemplate(null);
-                }}>
-                  {t("document.edit.template")}
-                </Button>
-              </DialogClose>
+              <Button onClick={() => {
+                handleSelectTemplate(previewTemplate);
+                setPreviewTemplate(null);
+              }}>
+                {t("document.edit.template")}
+              </Button>
             </div>
           </DialogContent>
         </Dialog>
