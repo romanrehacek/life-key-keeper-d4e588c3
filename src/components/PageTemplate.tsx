@@ -14,7 +14,7 @@ const PageTemplate = ({ title, children }: PageTemplateProps) => {
       <Header />
       <main className="flex-1">
         <div className="container-lg py-12">
-          {title && <h1 className="text-3xl font-bold mb-8">{title}</h1>}
+          {title && <h1 className="text-3xl font-bold mb-8 mx-auto max-w-4xl">{title}</h1>}
           {children}
         </div>
       </main>

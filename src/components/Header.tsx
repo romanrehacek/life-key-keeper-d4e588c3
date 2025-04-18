@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Key, Menu, X, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from '@/hooks/useTheme';
+import LanguageSelector from '@/components/LanguageSelector';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,17 +36,15 @@ const Header = () => {
 
   return (
     <div className="flex flex-col">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="border-b">
         <div className="container-lg flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
               <Key className="h-6 w-6 text-lifekey-teal" />
               <span className="text-xl font-semibold tracking-tight">Životný kľúč</span>
             </Link>
           </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <div className="flex items-center space-x-4">
             {!isAuthenticated && publicNavLinks.map((link) => (
               <Link 
                 key={link.path}
@@ -68,6 +67,7 @@ const Header = () => {
             >
               {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
+            <LanguageSelector />
             {isAuthenticated ? (
               <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
                 Odhlásiť sa
@@ -77,30 +77,10 @@ const Header = () => {
                 Prihlásiť sa
               </Button>
             )}
-          </nav>
-          
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            >
-              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Open main menu"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </Button>
           </div>
         </div>
       </header>
 
-      {/* Sidebar Navigation for authenticated users */}
       {isAuthenticated && (
         <nav className="hidden md:block border-r bg-sidebar w-64 h-[calc(100vh-4rem)] fixed top-16 left-0">
           <div className="p-4">
@@ -124,7 +104,6 @@ const Header = () => {
         </nav>
       )}
 
-      {/* Mobile menu */}
       <div className={cn(
         "md:hidden fixed inset-y-0 right-0 z-50 w-full bg-background transition-transform duration-300 ease-in-out",
         mobileMenuOpen ? "translate-x-0" : "translate-x-full"

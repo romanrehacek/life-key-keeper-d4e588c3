@@ -1,69 +1,121 @@
 
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import PageTemplate from '@/components/PageTemplate';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import RichTextEditor from '@/components/RichTextEditor';
+import TemplateSelectionDialog from '@/components/TemplateSelectionDialog';
+import { DocumentTemplate } from '@/types/templates';
+import { useToast } from '@/hooks/use-toast';
 
 const DocumentEdit = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { t } = useLanguage();
+  
+  const [documentTitle, setDocumentTitle] = useState("Informácie o domácnosti");
+  const [documentDescription, setDocumentDescription] = useState("Kúrenie, ističe, zabezpečenie domu a ovládanie smart zariadení.");
+  const [documentType, setDocumentType] = useState("household");
+  const [documentContent, setDocumentContent] = useState(`# Zabezpečovací systém\n\nKód do alarmu: 1234\n\nAlarm sa zapína/vypína pri vchodových dverách na ovládacom paneli.\n\n# Kúrenie\n\nKotol sa nachádza v technickej miestnosti...`);
+  
+  const handleSave = () => {
+    toast({
+      title: "Document saved",
+      description: "Your document has been saved successfully."
+    });
+    navigate(`/document/${id}`);
+  };
+  
+  const handleCancel = () => {
+    navigate(`/document/${id}`);
+  };
+  
+  const handleSelectTemplate = (template: DocumentTemplate) => {
+    setDocumentContent(template.content);
+    toast({
+      title: "Template applied",
+      description: `The template "${template.title}" has been applied to your document.`
+    });
+  };
 
   return (
-    <PageTemplate title="Upraviť dokument">
+    <PageTemplate title={t("document.edit.title")}>
       <div className="max-w-4xl mx-auto">
-        <Link to={`/document/${id}`} className="inline-flex items-center text-lifekey-teal hover:underline mb-6">
+        <Link to={`/document/${id}`} className="inline-flex items-center text-primary hover:underline mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Späť na dokument
+          {t("common.back")}
         </Link>
 
         <Card>
           <CardHeader>
-            <h2 className="text-2xl font-semibold">Upraviť dokument</h2>
+            <h2 className="text-2xl font-semibold">{t("document.edit.title")}</h2>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-2">
-              <Label htmlFor="title">Názov dokumentu</Label>
-              <Input id="title" defaultValue="Informácie o domácnosti" />
+              <Label htmlFor="title">{t("document.edit.name")}</Label>
+              <Input 
+                id="title" 
+                value={documentTitle} 
+                onChange={(e) => setDocumentTitle(e.target.value)} 
+              />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="description">Popis</Label>
-              <Input id="description" defaultValue="Kúrenie, ističe, zabezpečenie domu a ovládanie smart zariadení." />
+              <Label htmlFor="description">{t("document.edit.description")}</Label>
+              <Input 
+                id="description" 
+                value={documentDescription} 
+                onChange={(e) => setDocumentDescription(e.target.value)} 
+              />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="type">Typ dokumentu</Label>
-              <Select defaultValue="household">
-                <SelectTrigger>
-                  <SelectValue placeholder="Vyberte typ dokumentu" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="household">Domácnosť</SelectItem>
-                  <SelectItem value="finance">Financie</SelectItem>
-                  <SelectItem value="crypto">Kryptomeny</SelectItem>
-                  <SelectItem value="family">Rodina a kontakty</SelectItem>
-                  <SelectItem value="instructions">Čo robiť, ak...</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="type">{t("document.edit.type")}</Label>
+              <div className="flex gap-2">
+                <Select value={documentType} onValueChange={setDocumentType}>
+                  <SelectTrigger className="flex-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="household">Domácnosť</SelectItem>
+                    <SelectItem value="finance">Financie</SelectItem>
+                    <SelectItem value="crypto">Kryptomeny</SelectItem>
+                    <SelectItem value="family">Rodina a kontakty</SelectItem>
+                    <SelectItem value="instructions">Čo robiť, ak...</SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                <TemplateSelectionDialog 
+                  selectedCategory={documentType}
+                  onSelectTemplate={handleSelectTemplate}
+                >
+                  <Button variant="outline">{t("document.edit.template")}</Button>
+                </TemplateSelectionDialog>
+              </div>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="content">Obsah dokumentu</Label>
-              <Textarea 
-                id="content" 
-                className="min-h-[400px]"
-                defaultValue={`# Zabezpečovací systém\n\nKód do alarmu: 1234\n\nAlarm sa zapína/vypína pri vchodových dverách na ovládacom paneli.\n\n# Kúrenie\n\nKotol sa nachádza v technickej miestnosti...`}
+              <Label htmlFor="content">{t("document.edit.content")}</Label>
+              <RichTextEditor 
+                value={documentContent} 
+                onChange={setDocumentContent} 
               />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline">Zrušiť</Button>
-            <Button className="bg-lifekey-teal hover:bg-lifekey-blue">Uložiť zmeny</Button>
+            <Button variant="outline" onClick={handleCancel}>
+              {t("document.edit.cancel")}
+            </Button>
+            <Button className="bg-primary hover:bg-primary/90" onClick={handleSave}>
+              {t("document.edit.save")}
+            </Button>
           </CardFooter>
         </Card>
       </div>
