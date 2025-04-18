@@ -34,6 +34,7 @@ import Security from "./pages/Security";
 import FAQ from "./pages/FAQ";
 import Documentation from "./pages/Documentation";
 import DocumentEdit from "./pages/DocumentEdit";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/documents" element={<Documents />} />
             <Route path="/document/:id" element={<DocumentDetail />} />
             <Route path="/document/:id/edit" element={<DocumentEdit />} />
