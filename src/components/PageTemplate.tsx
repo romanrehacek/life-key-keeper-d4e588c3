@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 interface PageTemplateProps {
-  title: string;
+  title?: string;
   children: React.ReactNode;
 }
 
@@ -14,7 +14,7 @@ const PageTemplate = ({ title, children }: PageTemplateProps) => {
       <Header />
       <main className="flex-1">
         <div className="container-lg py-12">
-          <h1 className="text-3xl font-bold mb-8">{title}</h1>
+          {title && <h1 className="text-3xl font-bold mb-8">{title}</h1>}
           {children}
         </div>
       </main>

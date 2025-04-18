@@ -1,18 +1,40 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
-import { ShieldCheck, Key, CheckCircle, FileText, Users, Activity, ArrowRight } from "lucide-react"; // Added ArrowRight import
+import { ShieldCheck, Key, CheckCircle, FileText, Users, Activity, ArrowRight } from "lucide-react";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Dashboard from '@/components/Dashboard';
+
+const latestBlogPosts = [
+  {
+    id: 1,
+    title: "Ako zabezpečiť svoje digitálne dedičstvo",
+    excerpt: "V dnešnej dobe je dôležité myslieť aj na to, čo sa stane s našimi digitálnymi účtami...",
+    date: "2024-04-15",
+    image: "/assets/digital-legacy.jpg"
+  },
+  {
+    id: 2,
+    title: "Prečo je dôležité mať plán",
+    excerpt: "Plánovanie budúcnosti nie je príjemná téma, ale je nevyhnutné...",
+    date: "2024-04-10",
+    image: "/assets/planning.jpg"
+  },
+  {
+    id: 3,
+    title: "Bezpečnosť na prvom mieste",
+    excerpt: "Zabezpečenie citlivých informácií je kľúčové...",
+    date: "2024-04-05",
+    image: "/assets/security.jpg"
+  }
+];
 
 const Index = () => {
   const { toast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   
-  // Simulate authentication for demo purposes
   const handleLogin = () => {
     setIsAuthenticated(true);
     toast({
@@ -33,8 +55,9 @@ const Index = () => {
         ) : (
           <>
             {/* Hero section */}
-            <section className="bg-gradient-to-r from-lifekey-blue to-lifekey-teal text-white py-16 md:py-24">
-              <div className="container-lg">
+            <section className="bg-gradient-to-r from-lifekey-blue to-lifekey-teal text-white py-16 md:py-24 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('/assets/hero-pattern.jpg')] opacity-10 bg-cover bg-center" />
+              <div className="container-lg relative">
                 <div className="max-w-3xl mx-auto text-center">
                   <div className="inline-flex items-center justify-center rounded-full bg-white/10 p-2 mb-6">
                     <Key className="h-6 w-6 text-lifekey-accent" />
@@ -143,7 +166,7 @@ const Index = () => {
                   </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                   {[
                     {
                       step: '01',
@@ -161,8 +184,8 @@ const Index = () => {
                       description: 'Pravidelne potvrdzujte svoju aktivitu. Ak sa dlhodobé neozviete, systém automaticky upozorní vaše kontakty.'
                     }
                   ].map((item, index) => (
-                    <div key={index} className="relative">
-                      <div className="bg-card rounded-lg p-6 border">
+                    <div key={index} className="relative flex items-center">
+                      <div className="bg-card rounded-lg p-6 border flex-1">
                         <div className="text-3xl font-bold text-lifekey-teal mb-4">
                           {item.step}
                         </div>
@@ -170,7 +193,7 @@ const Index = () => {
                         <p className="text-muted-foreground">{item.description}</p>
                       </div>
                       {index < 2 && (
-                        <div className="hidden md:block absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
+                        <div className="hidden md:flex items-center justify-center w-8">
                           <ArrowRight className="h-6 w-6 text-muted-foreground" />
                         </div>
                       )}
@@ -180,9 +203,60 @@ const Index = () => {
               </div>
             </section>
             
-            {/* CTA Section */}
-            <section className="py-16 md:py-24 bg-lifekey-blue text-white">
+            {/* Latest Blog Posts */}
+            <section className="py-16 md:py-24 bg-background">
               <div className="container-lg">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    Najnovšie články
+                  </h2>
+                  <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
+                    Prečítajte si naše najnovšie články o bezpečnosti a plánovaní budúcnosti
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {latestBlogPosts.map((post) => (
+                    <Link to={`/blog/${post.id}`} key={post.id} className="group">
+                      <div className="bg-card rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-lg">
+                        <div className="aspect-video relative overflow-hidden">
+                          <img 
+                            src={post.image} 
+                            alt={post.title}
+                            className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="p-6">
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {new Date(post.date).toLocaleDateString('sk-SK')}
+                          </p>
+                          <h3 className="text-xl font-semibold mb-2 group-hover:text-lifekey-teal transition-colors">
+                            {post.title}
+                          </h3>
+                          <p className="text-muted-foreground">
+                            {post.excerpt}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="text-center mt-12">
+                  <Button asChild variant="outline">
+                    <Link to="/blog">
+                      Zobraziť všetky články
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </section>
+            
+            {/* CTA Section */}
+            <section className="py-16 md:py-24 bg-gradient-to-r from-lifekey-blue to-lifekey-teal text-white relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('/assets/cta-pattern.jpg')] opacity-10 bg-cover bg-center" />
+              <div className="container-lg relative">
                 <div className="max-w-3xl mx-auto text-center">
                   <div className="inline-flex items-center justify-center rounded-full bg-white/10 p-2 mb-6">
                     <ShieldCheck className="h-6 w-6 text-lifekey-accent" />
@@ -204,7 +278,7 @@ const Index = () => {
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="border-white/30 hover:bg-white/20"
+                      className="border-white/30 hover:bg-white/20 text-white"
                     >
                       Prémiové funkcie
                     </Button>

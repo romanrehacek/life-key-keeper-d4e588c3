@@ -1,34 +1,29 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Key, Menu, X } from "lucide-react";
+import { Key, Menu, X, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from '@/hooks/useTheme';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
   
-  // Check if user is authenticated and in dashboard area
-  // For this demo version, we'll consider dashboard paths to be documents, contacts, activity, account
   const isDashboardPath = ['/documents', '/contacts', '/activity', '/account'].includes(location.pathname);
-  
-  // For demo purposes, assume user is not authenticated
   const isAuthenticated = false;
   
   const handleLogin = () => {
     navigate('/login');
   };
 
-  // Public navigation links (when not logged in)
   const publicNavLinks = [
     { name: "Info", path: "/info" },
     { name: "Blog", path: "/blog" },
     { name: "Premium", path: "/premium" },
   ];
 
-  // Dashboard navigation links (when logged in)
   const dashboardNavLinks = [
     { name: "Dokumenty", path: "/documents" },
     { name: "Kontakty", path: "/contacts" },
@@ -36,58 +31,98 @@ const Header = () => {
     { name: "Účet", path: "/account" },
   ];
   
-  // Determine which set of links to show
   const navLinks = isDashboardPath || isAuthenticated ? dashboardNavLinks : publicNavLinks;
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container-lg flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2">
-            <Key className="h-6 w-6 text-lifekey-teal" />
-            <span className="text-xl font-semibold tracking-tight">Životný kľúč</span>
-          </Link>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.path}
-              to={link.path} 
-              className={cn(
-                "text-sm font-medium transition-colors",
-                location.pathname === link.path 
-                  ? "text-lifekey-teal" 
-                  : "hover:text-lifekey-teal"
-              )}
-            >
-              {link.name}
+    <div className="flex flex-col">
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container-lg flex h-16 items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
+              <Key className="h-6 w-6 text-lifekey-teal" />
+              <span className="text-xl font-semibold tracking-tight">Životný kľúč</span>
             </Link>
-          ))}
-          {isAuthenticated ? (
-            <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
-              Odhlásiť sa
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-6">
+            {!isAuthenticated && publicNavLinks.map((link) => (
+              <Link 
+                key={link.path}
+                to={link.path} 
+                className={cn(
+                  "text-sm font-medium transition-colors",
+                  location.pathname === link.path 
+                    ? "text-lifekey-teal" 
+                    : "hover:text-lifekey-teal"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="mr-2"
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-          ) : (
-            <Button className="bg-lifekey-teal hover:bg-lifekey-blue" onClick={handleLogin}>
-              Prihlásiť sa
+            {isAuthenticated ? (
+              <Button className="bg-lifekey-teal hover:bg-lifekey-blue">
+                Odhlásiť sa
+              </Button>
+            ) : (
+              <Button className="bg-lifekey-teal hover:bg-lifekey-blue" onClick={handleLogin}>
+                Prihlásiť sa
+              </Button>
+            )}
+          </nav>
+          
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
-          )}
-        </nav>
-        
-        {/* Mobile menu button */}
-        <div className="md:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Open main menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Open main menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+          </div>
         </div>
-      </div>
+      </header>
+
+      {/* Sidebar Navigation for authenticated users */}
+      {isAuthenticated && (
+        <nav className="hidden md:block border-r bg-sidebar w-64 h-[calc(100vh-4rem)] fixed top-16 left-0">
+          <div className="p-4">
+            <div className="space-y-1">
+              {dashboardNavLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "flex items-center py-2 px-3 rounded-md text-sm font-medium transition-colors",
+                    location.pathname === link.path
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </nav>
+      )}
 
       {/* Mobile menu */}
       <div className={cn(
@@ -135,7 +170,7 @@ const Header = () => {
           )}
         </nav>
       </div>
-    </header>
+    </div>
   );
 };
 

@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/hooks/useTheme";
 
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
@@ -38,48 +39,50 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/documents" element={<Documents />} />
-          <Route path="/document/:id" element={<DocumentDetail />} />
-          <Route path="/document/:id/edit" element={<DocumentEdit />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/premium" element={<Premium />} />
-          
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-          <Route path="/verify-phone" element={<VerifyPhone />} />
-          <Route path="/setup-2fa" element={<Setup2FA />} />
-          
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-          <Route path="/info" element={<Info />} />
-          <Route path="/contact" element={<ContactPage />} />
-          
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/gdpr" element={<GDPR />} />
-          
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/security" element={<Security />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/documentation" element={<Documentation />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider defaultTheme="light" storageKey="lifekey-theme">
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/documents" element={<Documents />} />
+            <Route path="/document/:id" element={<DocumentDetail />} />
+            <Route path="/document/:id/edit" element={<DocumentEdit />} />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/activity" element={<Activity />} />
+            <Route path="/account" element={<Account />} />
+            <Route path="/premium" element={<Premium />} />
+            
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/verify-phone" element={<VerifyPhone />} />
+            <Route path="/setup-2fa" element={<Setup2FA />} />
+            
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/contact" element={<ContactPage />} />
+            
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/cookies" element={<Cookies />} />
+            <Route path="/gdpr" element={<GDPR />} />
+            
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/documentation" element={<Documentation />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
