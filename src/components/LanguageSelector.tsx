@@ -12,7 +12,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const LanguageSelector = () => {
   const { language, setLanguage, languages } = useLanguage();
-
   const currentLanguage = languages.find(lang => lang.code === language);
 
   return (

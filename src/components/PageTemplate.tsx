@@ -2,7 +2,6 @@
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface PageTemplateProps {
   title?: string;
@@ -10,8 +9,6 @@ interface PageTemplateProps {
 }
 
 const PageTemplate = ({ title, children }: PageTemplateProps) => {
-  const { t } = useLanguage();
-  
   return (
     <div className="flex flex-col min-h-screen">
       <Header />

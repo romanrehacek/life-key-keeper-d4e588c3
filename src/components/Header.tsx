@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Key, Menu, X, Sun, Moon } from "lucide-react";
+import { Key, X, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from '@/hooks/useTheme';
 import LanguageSelector from '@/components/LanguageSelector';
