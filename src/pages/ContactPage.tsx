@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -18,6 +17,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Helmet } from "react-helmet";
 import PageTemplate from '@/components/PageTemplate';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -35,6 +35,7 @@ const formSchema = z.object({
 });
 
 const ContactPage = () => {
+  const { t } = useLanguage();
   const { toast } = useToast();
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,27 +51,24 @@ const ContactPage = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: "Správa odoslaná",
-      description: "Ďakujeme za vašu správu. Odpovieme čo najskôr.",
+      title: t('contact.form.success'),
+      description: t('contact.form.successMessage'),
     });
     form.reset();
   }
   
   return (
-    <PageTemplate title="Kontaktujte nás">
+    <PageTemplate title={t('contact.title')}>
       <Helmet>
-        <title>Kontaktujte nás | Životný kľúč</title>
-        <meta name="description" content="Máte otázky? Neváhajte nás kontaktovať. Naši odborníci vám radi pomôžu s čímkoľvek." />
-        <meta name="keywords" content="kontakt, pomoc, podpora, životný kľúč, digitálne dedičstvo" />
+        <title>{t('contact.title')} | Životný kľúč</title>
+        <meta name="description" content={t('contact.subtitle')} />
       </Helmet>
     
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h1 className="text-3xl font-bold mb-6">Kontaktujte nás</h1>
-            <p className="text-muted-foreground mb-8">
-              Máte otázky alebo potrebujete pomoc? Vyplňte kontaktný formulár a my sa vám ozveme čo najskôr. Prípadne nás môžete kontaktovať priamo telefonicky alebo e-mailom.
-            </p>
+            <h1 className="text-3xl font-bold mb-6">{t('contact.title')}</h1>
+            <p className="text-muted-foreground mb-8">{t('contact.subtitle')}</p>
             
             <div className="space-y-6">
               <div className="flex items-start">
@@ -108,20 +106,18 @@ const ContactPage = () => {
             </div>
             
             <div className="mt-12">
-              <h3 className="font-semibold mb-2">Prevádzkové hodiny</h3>
+              <h3 className="font-semibold mb-2">{t('contact.office')}</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>Pondelok - Piatok</div>
+                <div>{t('contact.workdays')}</div>
                 <div>9:00 - 17:00</div>
-                <div>Sobota</div>
-                <div>Zatvorené</div>
-                <div>Nedeľa</div>
-                <div>Zatvorené</div>
+                <div>{t('contact.weekend')}</div>
+                <div>{t('contact.closed')}</div>
               </div>
             </div>
           </div>
           
           <div className="bg-card border p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-6">Napíšte nám</h2>
+            <h2 className="text-xl font-semibold mb-6">{t('contact.form.submit')}</h2>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -129,9 +125,9 @@ const ContactPage = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Vaše meno</FormLabel>
+                      <FormLabel>{t('contact.form.name')}</FormLabel>
                       <FormControl>
-                        <Input placeholder="Zadajte vaše meno" {...field} />
+                        <Input placeholder={t('contact.form.name')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -143,7 +139,7 @@ const ContactPage = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Váš email</FormLabel>
+                      <FormLabel>{t('contact.form.email')}</FormLabel>
                       <FormControl>
                         <Input type="email" placeholder="vas@email.sk" {...field} />
                       </FormControl>
@@ -157,7 +153,7 @@ const ContactPage = () => {
                   name="subject"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Predmet</FormLabel>
+                      <FormLabel>{t('contact.form.subject')}</FormLabel>
                       <FormControl>
                         <Input placeholder="O čom nám chcete napísať?" {...field} />
                       </FormControl>
@@ -171,7 +167,7 @@ const ContactPage = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Vaša správa</FormLabel>
+                      <FormLabel>{t('contact.form.message')}</FormLabel>
                       <FormControl>
                         <Textarea 
                           placeholder="Napíšte vašu správu..." 
@@ -185,7 +181,7 @@ const ContactPage = () => {
                 />
                 
                 <Button type="submit" className="bg-lifekey-teal hover:bg-lifekey-blue w-full">
-                  Odoslať správu
+                  {t('contact.form.submit')}
                 </Button>
                 
                 <p className="text-xs text-muted-foreground text-center">
@@ -194,22 +190,6 @@ const ContactPage = () => {
                 </p>
               </form>
             </Form>
-          </div>
-        </div>
-        
-        <div className="mt-16">
-          <h3 className="font-semibold mb-4 text-xl">Kde nás nájdete</h3>
-          <div className="w-full h-96 rounded-lg overflow-hidden border">
-            <iframe 
-              title="Mapa"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.8360983598!2d17.105438376536116!3d48.14258347128465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c89448936079f%3A0x618de0e5a2e0da3c!2zSGxhdm7DqSBuw6FtZXN0aWUsIDgxMSAwMSBCcmF0aXNsYXZh!5e0!3m2!1sen!2ssk!4v1681726346250!5m2!1sen!2ssk" 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }}
-              allowFullScreen 
-              loading="lazy" 
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
           </div>
         </div>
       </div>
