@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState } from 'react';
 
 type Language = 'sk' | 'en' | 'de' | 'cs';
@@ -10,10 +11,10 @@ interface LanguageContextType {
 }
 
 const languages = [
-  { code: 'sk', name: 'Slovak', nativeName: 'Slovenčina' },
-  { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'de', name: 'German', nativeName: 'Deutsch' },
-  { code: 'cs', name: 'Czech', nativeName: 'Čeština' },
+  { code: 'sk' as Language, name: 'Slovak', nativeName: 'Slovenčina' },
+  { code: 'en' as Language, name: 'English', nativeName: 'English' },
+  { code: 'de' as Language, name: 'German', nativeName: 'Deutsch' },
+  { code: 'cs' as Language, name: 'Czech', nativeName: 'Čeština' },
 ];
 
 const translations = {
