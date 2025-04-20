@@ -271,7 +271,7 @@ const translations: TranslationsType = {
     pt: "Editor visual",
     hi: "विज़ुअल एडिटर",
     zh: "可视化编辑器",
-    ja: "ビジュアルエディタ",
+    ja: "ビジュア���エディタ",
   },
   "editor.markdownMode": {
     en: "Markdown",
@@ -420,7 +420,7 @@ const translations: TranslationsType = {
     pl: "Szablon zastosowany",
     pt: "Modelo aplicado",
     hi: "टेम्पलेट लागू किया गया",
-    zh: "已应用模板",
+    zh: "已应用模��",
     ja: "テンプレートが適用されました",
   },
   "document.edit.templateAppliedDescription": {
@@ -596,8 +596,8 @@ const translations: TranslationsType = {
   },
   "home.hero.subtitle": {
     en: "Life Key ensures that your important documents and information are available to your loved ones in case of emergency or long-term inactivity.",
-    de: "Life Key sorgt dafür, dass Ihre wichtigen Dokumente und Informationen für Ihre Lieben im Notfall oder bei längerer Inaktivität verfügbar sind.",
-    fr: "Life Key garantit que vos documents et informations importants sont disponibles pour vos proches en cas d'urgence ou d'inactivité prolongée.",
+    de: "Life Key sorgt dafür, dass Ihre wichtigen Dokumente und Informationen für Ihre Lieben im Notfall oder bei längerer Inactive sind verfügbar.",
+    fr: "Life Key garantit que vos documents et informations importantes sont disponibles pour vos proches en cas d'urgence ou d'inactivité prolongée.",
     es: "Life Key garantiza que sus documentos e información importantes estén disponibles para sus seres queridos en caso de emergencia o inactividad a largo plazo.",
     it: "Life Key assicura che i tuoi documenti e le informazioni importanti siano disponibili per i tuoi cari in caso di emergenza o inattività a lungo termine.",
     sk: "Životný kľúč sa postará, aby vaše dôležité dokumenty a informácie boli dostupné vašim bližným v prípade núdzovej situácie alebo dlhodobej neaktivity.",
@@ -605,9 +605,9 @@ const translations: TranslationsType = {
     hu: "Az Életkulcs gondoskodik arról, hogy fontos dokumentumai és információi elérhetők legyenek szerettei számára vészhelyzet vagy hosszú távú inaktivitás esetén.",
     pl: "Klucz Życia dba o to, aby ważne dokumenty i informacje były dostępne dla Twoich bliskich w sytuacji awaryjnej lub długotrwałej nieaktywności.",
     pt: "A Chave da Vida garante que seus documentos e informações importantes estejam disponíveis para seus entes queridos em caso de emergência ou inatividade de longo prazo.",
-    hi: "लाइफ की यह सुनिश्चित करती है कि आपके महत्वपूर्ण दस्तावेज और जानकारी आपातकालीन स्थिति या लंबी अवधि की निष्क्रियता के मामले में आपके प्रियजनों के लिए उपलब्ध हों।",
+    hi: "लाइफ की यह सुनिश्चित करती है कि आपके महत्वपूर्ण दस्तावेज और जानकारी आपातकालीन स्थिति या लंबी अवधि के मामले में आपके प्रियजनों के लिए उपलब्ध हों।",
     zh: "生命密钥确保在紧急情况或长期不活动的情况下，您的重要文件和信息可供您的亲人使用。",
-    ja: "ライフキーは、緊急時や長期間の不活動の場合に、重要な文書や情報が愛する人に提供されることを保証します。",
+    ja: "ライフキーは、緊急時や長期間の不活動の場合���、重要な文書や情報が愛する人に提供されることを保証します。",
   },
   "home.button.getStarted": {
     en: "Get Started",
@@ -726,7 +726,7 @@ const translations: TranslationsType = {
     pl: "System automatycznie monitoruje twoją aktywność i reaguje tylko w przypadku długotrwałej nieaktywności.",
     pt: "O sistema monitora automaticamente sua atividade e responde apenas em caso de inatividade de longo prazo.",
     hi: "सिस्टम स्वचालित रूप से आपकी गतिविधि की निगरानी करता है और केवल दीर्घकालिक निष्क्रियता के मामले में प्रतिक्रिया देता है।",
-    zh: "系统会自动监控您的活动，并且只有在长期不活动的情况下才会响应。",
+    zh: "系统会自动监控您的活动，并且只有在长期不活动的情况���才会响应。",
     ja: "システムは自動的にあなたの活動を監視し、長期間の非アクティブな場合にのみ対応します。",
   },
   "home.feature.contacts": {
@@ -752,3 +752,62 @@ const translations: TranslationsType = {
     it: "Aggiungi persone fidate che riceveranno l'accesso alle tue informazioni dopo aver soddisfatto le condizioni di sicurezza.",
     sk: "Pridajte dôveryhodné osoby, ktoré dostanú prístup k vašim informáciám po splnení bezpečnostných podmienok.",
     cs: "Přidejte důvěryhodné osoby, které získají přístup k vašim informacím po splnění bezpečnostních podmínek.",
+  },
+};
+
+type LanguageContextType = {
+  language: string;
+  setLanguage: (lang: string) => void;
+  t: (key: string, params?: Record<string, string | number>) => string;
+  languages: Language[];
+};
+
+const LanguageContext = createContext<LanguageContextType>({
+  language: "en",
+  setLanguage: () => {},
+  t: () => "",
+  languages: [],
+});
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<string>(() => {
+    return localStorage.getItem("language") || "en";
+  });
+
+  const setLanguage = (lang: string) => {
+    setLanguageState(lang);
+    localStorage.setItem("language", lang);
+  };
+
+  const t = (key: string, params?: Record<string, string | number>) => {
+    const translation = translations[key]?.[language] || key;
+    
+    // Simple parameter replacement
+    if (params) {
+      return Object.entries(params).reduce((str, [param, value]) => 
+        str.replace(`{${param}}`, String(value)), translation
+      );
+    }
+    
+    return translation;
+  };
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
+  const value = {
+    language,
+    setLanguage,
+    t,
+    languages,
+  };
+
+  return (
+    <LanguageContext.Provider value={value}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => useContext(LanguageContext);
