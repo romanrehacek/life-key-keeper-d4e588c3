@@ -9,6 +9,15 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { typeLabels, typeColors } from '@/types/document';
 
+// Define type icons mapping
+const typeIcons = {
+  household: <File className="h-3 w-3" />,
+  finance: <File className="h-3 w-3" />,
+  crypto: <File className="h-3 w-3" />,
+  family: <File className="h-3 w-3" />,
+  instructions: <File className="h-3 w-3" />
+};
+
 export interface DocumentProps {
   id: string;
   title: string;
@@ -25,15 +34,15 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
   // Format recipient text based on count
   const getRecipientsText = () => {
     if (recipients === 1) return t("document.recipient.one");
-    else if (recipients > 1 && recipients < 5) return t("document.recipient.few", { count: recipients });
-    else return t("document.recipient.many", { count: recipients });
+    else if (recipients > 1 && recipients < 5) return t(`document.recipient.few`);
+    else return t(`document.recipient.many`);
   };
   
   // Format attachment text based on count
   const getAttachmentsText = () => {
     if (attachments === 1) return t("document.attachment.one");
-    else if (attachments > 1 && attachments < 5) return t("document.attachment.few", { count: attachments });
-    else return t("document.attachment.many", { count: attachments });
+    else if (attachments > 1 && attachments < 5) return t(`document.attachment.few`);
+    else return t(`document.attachment.many`);
   };
 
   return (
