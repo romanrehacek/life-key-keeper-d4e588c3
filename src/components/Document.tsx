@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Edit, Trash, File, LockKeyhole, CalendarClock, AlertTriangle } from 'lu
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { typeLabels, typeColors } from '@/types/document';
 
 export interface DocumentProps {
   id: string;
@@ -23,22 +25,6 @@ const typeIcons = {
   crypto: <File className="h-5 w-5" />,
   family: <File className="h-5 w-5" />,
   instructions: <File className="h-5 w-5" />
-};
-
-const typeColors = {
-  household: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300',
-  finance: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-  crypto: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
-  family: 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300',
-  instructions: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-};
-
-const typeLabels = {
-  household: 'Domácnosť',
-  finance: 'Financie',
-  crypto: 'Kryptomeny',
-  family: 'Rodina a kontakty',
-  instructions: 'Čo robiť, ak...'
 };
 
 const Document = ({ id, title, description, type, lastUpdated, recipients, attachments = 0 }: DocumentProps) => {

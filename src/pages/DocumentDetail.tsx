@@ -58,7 +58,8 @@ const documentData: Document = {
     { id: '2', name: 'Peter Novák', email: 'peter@example.com' }
   ],
   createdAt: '10.3.2025',
-  isEncrypted: true
+  isEncrypted: true,
+  attachments: []
 };
 
 const DocumentDetail = () => {
