@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { 
   Bold, 
@@ -141,7 +140,25 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     return <FileText className="h-4 w-4" />;
   };
 
-  // Formatting toolbar component to reuse in both tabs
+  const getDisplayValue = () => {
+    if (editorMode === 'visual') {
+      return value
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/__(.*?)__/g, '<u>$1</u>')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+        .replace(/^- (.*$)/gm, '• $1')
+        .replace(/^[0-9]+\. (.*$)/gm, (match, p1, offset) => {
+          const num = match.split('.')[0];
+          return `${num}. ${p1}`;
+        });
+    }
+    return value;
+  };
+
   const FormattingToolbar = () => (
     <div className="flex flex-wrap items-center gap-1 p-1 bg-muted/30 rounded-md">
       <Button
@@ -288,13 +305,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         <TabsContent value="visual" className="space-y-2">
           <FormattingToolbar />
           
-          <Textarea
-            ref={textAreaRef}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onSelect={handleTextSelection}
-            onClick={handleTextSelection}
-            className="min-h-[400px] font-mono text-sm"
+          <div
+            className="min-h-[400px] font-mono text-sm p-4 border rounded-md"
+            dangerouslySetInnerHTML={{ __html: getDisplayValue() }}
+            contentEditable
+            onInput={(e) => {
+              const content = e.currentTarget.innerText;
+              onChange(content);
+            }}
           />
         </TabsContent>
         

@@ -19,29 +19,21 @@ export interface DocumentProps {
   attachments?: number;
 }
 
-const typeIcons = {
-  household: <File className="h-5 w-5" />,
-  finance: <File className="h-5 w-5" />,
-  crypto: <File className="h-5 w-5" />,
-  family: <File className="h-5 w-5" />,
-  instructions: <File className="h-5 w-5" />
-};
-
 const Document = ({ id, title, description, type, lastUpdated, recipients, attachments = 0 }: DocumentProps) => {
   const { t } = useLanguage();
 
   // Format recipient text based on count
   const getRecipientsText = () => {
-    if (recipients === 1) return "1 príjemca"; 
-    else if (recipients > 1 && recipients < 5) return `${recipients} príjemcovia`;
-    else return `${recipients} príjemcov`;
+    if (recipients === 1) return t("document.recipient.one");
+    else if (recipients > 1 && recipients < 5) return t("document.recipient.few", { count: recipients });
+    else return t("document.recipient.many", { count: recipients });
   };
   
   // Format attachment text based on count
   const getAttachmentsText = () => {
-    if (attachments === 1) return "1 súbor";
-    else if (attachments > 1 && attachments < 5) return `${attachments} súbory`;
-    else return `${attachments} súborov`;
+    if (attachments === 1) return t("document.attachment.one");
+    else if (attachments > 1 && attachments < 5) return t("document.attachment.few", { count: attachments });
+    else return t("document.attachment.many", { count: attachments });
   };
 
   return (
@@ -53,11 +45,11 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
         <div className="flex justify-between items-start">
           <Badge variant="outline" className={cn("flex gap-1 items-center font-normal", typeColors[type])}>
             {typeIcons[type]}
-            {typeLabels[type]}
+            {t(typeLabels[type])}
           </Badge>
           <div className="flex items-center text-xs text-muted-foreground gap-1">
             <LockKeyhole className="h-3 w-3" />
-            Šifrované
+            {t("document.encrypted")}
           </div>
         </div>
         <CardTitle className="mt-2">{title}</CardTitle>
@@ -84,14 +76,14 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
       <CardFooter className="flex justify-between pt-2">
         <Button variant="outline" size="sm" asChild>
           <Link to={`/document/${id}`}>
-            Otvoriť
+            {t("document.open")}
           </Link>
         </Button>
         <div className="flex gap-2">
-          <Button variant="ghost" size="icon" className="h-8 w-8">
+          <Button variant="ghost" size="icon" className="h-8 w-8" title={t("document.edit")}>
             <Edit className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" title={t("document.delete")}>
             <Trash className="h-4 w-4" />
           </Button>
         </div>

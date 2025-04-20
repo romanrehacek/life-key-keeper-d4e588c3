@@ -11,6 +11,7 @@ import DocumentHeader from '@/components/document/DocumentHeader';
 import DocumentContent from '@/components/document/DocumentContent';
 import DocumentActions from '@/components/document/DocumentActions';
 import DocumentRecipients from '@/components/document/DocumentRecipients';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Document } from '@/types/document';
 
 const documentData: Document = {
@@ -30,26 +31,6 @@ const documentData: Document = {
       <li>Zvoľte program pomocou otočného kolieska</li>
       <li>Potvrďte voľbu tlačidlom OK</li>
     </ol>
-    
-    <h2>Elektrický rozvádzač</h2>
-    <p>Hlavný istič sa nachádza v garáži pri vstupe.</p>
-    <p>Poistky sú označené nasledovne:</p>
-    <ul>
-      <li>F1: Osvetlenie prízemie</li>
-      <li>F2: Zásuvky prízemie</li>
-      <li>F3: Kuchynské spotrebiče</li>
-      <li>F4: Osvetlenie poschodie</li>
-      <li>F5: Zásuvky poschodie</li>
-      <li>F6: Klimatizácia</li>
-    </ul>
-    
-    <h2>Smart zariadenia</h2>
-    <p>Všetky smart zariadenia sú ovládané cez aplikáciu SmartHome.</p>
-    <p>Prístupové údaje:</p>
-    <ul>
-      <li>Email: smart@example.com</li>
-      <li>Heslo: Uložené v správcovi hesiel</li>
-    </ul>
   `,
   type: 'household',
   lastUpdated: '12.4.2025',
@@ -59,13 +40,17 @@ const documentData: Document = {
   ],
   createdAt: '10.3.2025',
   isEncrypted: true,
-  attachments: []
+  attachments: [
+    { id: '1', name: 'manual.pdf', type: 'application/pdf', size: 1024576, url: '/files/manual.pdf' },
+    { id: '2', name: 'schema.jpg', type: 'image/jpeg', size: 512000, url: '/files/schema.jpg' }
+  ]
 };
 
 const DocumentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [showSensitiveData, setShowSensitiveData] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [recipientDialogOpen, setRecipientDialogOpen] = useState(false);

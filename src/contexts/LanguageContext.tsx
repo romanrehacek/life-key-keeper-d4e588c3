@@ -271,7 +271,7 @@ const translations: TranslationsType = {
     pt: "Editor visual",
     hi: "विज़ुअल एडिटर",
     zh: "可视化编辑器",
-    ja: "ビジュ���ルエディタ",
+    ja: "ビジュ�����ルエディタ",
   },
   "editor.markdownMode": {
     en: "Markdown",
@@ -420,7 +420,7 @@ const translations: TranslationsType = {
     pl: "Szablon zastosowany",
     pt: "Modelo aplicado",
     hi: "टेम्पलेट लागू किया गया",
-    zh: "已应��模板",
+    zh: "已应���模板",
     ja: "テンプレートが適用されました",
   },
   "document.edit.templateAppliedDescription": {
@@ -557,6 +557,56 @@ const translations: TranslationsType = {
     hi: "मेरे दस्तावेज़",
     zh: "我的文档",
     ja: "マイドキュメント",
+  },
+  "document.encrypted": {
+    en: "Encrypted",
+    sk: "Šifrované",
+    cs: "Šifrované",
+  },
+  "document.open": {
+    en: "Open",
+    sk: "Otvoriť",
+    cs: "Otevřít",
+  },
+  "document.edit": {
+    en: "Edit document",
+    sk: "Upraviť dokument",
+    cs: "Upravit dokument",
+  },
+  "document.delete": {
+    en: "Delete document",
+    sk: "Vymazať dokument",
+    cs: "Smazat dokument",
+  },
+  "document.recipient.one": {
+    en: "1 recipient",
+    sk: "1 príjemca",
+    cs: "1 příjemce",
+  },
+  "document.recipient.few": {
+    en: "{count} recipients",
+    sk: "{count} príjemcovia",
+    cs: "{count} příjemci",
+  },
+  "document.recipient.many": {
+    en: "{count} recipients",
+    sk: "{count} príjemcov",
+    cs: "{count} příjemců",
+  },
+  "document.attachment.one": {
+    en: "1 file",
+    sk: "1 súbor",
+    cs: "1 soubor",
+  },
+  "document.attachment.few": {
+    en: "{count} files",
+    sk: "{count} súbory",
+    cs: "{count} soubory",
+  },
+  "document.attachment.many": {
+    en: "{count} files",
+    sk: "{count} súborov",
+    cs: "{count} souborů",
   }
 };
 
