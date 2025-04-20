@@ -30,6 +30,20 @@ const typeIcons = {
 const Document = ({ id, title, description, type, lastUpdated, recipients, attachments = 0 }: DocumentProps) => {
   const { t } = useLanguage();
 
+  // Format recipient text based on count
+  const getRecipientsText = () => {
+    if (recipients === 1) return "1 príjemca"; 
+    else if (recipients > 1 && recipients < 5) return `${recipients} príjemcovia`;
+    else return `${recipients} príjemcov`;
+  };
+  
+  // Format attachment text based on count
+  const getAttachmentsText = () => {
+    if (attachments === 1) return "1 súbor";
+    else if (attachments > 1 && attachments < 5) return `${attachments} súbory`;
+    else return `${attachments} súborov`;
+  };
+
   return (
     <Card className={cn(
       "overflow-hidden transition-all hover:border-lifekey-teal/50 hover:shadow-md",
@@ -57,12 +71,12 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
         <div className="mt-2 flex gap-2">
           <Badge variant={recipients === 0 ? "destructive" : "secondary"} className="text-xs flex items-center gap-1">
             {recipients === 0 && <AlertTriangle className="h-3 w-3" />}
-            {t("document.recipients", { count: recipients })}
+            {getRecipientsText()}
           </Badge>
           {attachments > 0 && (
             <Badge variant="secondary" className="text-xs flex items-center gap-1">
               <File className="h-3 w-3" />
-              {t("document.attachments", { count: attachments })}
+              {getAttachmentsText()}
             </Badge>
           )}
         </div>
