@@ -1,11 +1,11 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Edit, Trash, File, LockKeyhole, CalendarClock } from 'lucide-react';
+import { Edit, Trash, File, LockKeyhole, CalendarClock, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export interface DocumentProps {
   id: string;
@@ -14,6 +14,7 @@ export interface DocumentProps {
   type: 'household' | 'finance' | 'crypto' | 'family' | 'instructions';
   lastUpdated: string;
   recipients: number;
+  attachments?: number;
 }
 
 const typeIcons = {
@@ -40,9 +41,14 @@ const typeLabels = {
   instructions: 'Čo robiť, ak...'
 };
 
-const Document = ({ id, title, description, type, lastUpdated, recipients }: DocumentProps) => {
+const Document = ({ id, title, description, type, lastUpdated, recipients, attachments = 0 }: DocumentProps) => {
+  const { t } = useLanguage();
+
   return (
-    <Card className="overflow-hidden transition-all hover:border-lifekey-teal/50 hover:shadow-md">
+    <Card className={cn(
+      "overflow-hidden transition-all hover:border-lifekey-teal/50 hover:shadow-md",
+      recipients === 0 ? "border-red-500" : ""
+    )}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <Badge variant="outline" className={cn("flex gap-1 items-center font-normal", typeColors[type])}>
@@ -60,12 +66,19 @@ const Document = ({ id, title, description, type, lastUpdated, recipients }: Doc
       <CardContent className="pb-2">
         <div className="flex items-center text-xs text-muted-foreground gap-1">
           <CalendarClock className="h-3 w-3" />
-          Aktualizované: {lastUpdated}
+          {t("document.lastUpdated")}: {lastUpdated}
         </div>
-        <div className="mt-2">
-          <Badge variant="secondary" className="text-xs">
-            {recipients} príjemcov
+        <div className="mt-2 flex gap-2">
+          <Badge variant={recipients === 0 ? "destructive" : "secondary"} className="text-xs flex items-center gap-1">
+            {recipients === 0 && <AlertTriangle className="h-3 w-3" />}
+            {t("document.recipients", { count: recipients })}
           </Badge>
+          {attachments > 0 && (
+            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+              <File className="h-3 w-3" />
+              {t("document.attachments", { count: attachments })}
+            </Badge>
+          )}
         </div>
       </CardContent>
       <CardFooter className="flex justify-between pt-2">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Document, { DocumentProps } from './Document';
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,8 @@ const exampleDocuments: DocumentProps[] = [
     description: 'Kúrenie, ističe, zabezpečenie domu a ovládanie smart zariadení.',
     type: 'household',
     lastUpdated: '12.4.2025',
-    recipients: 2
+    recipients: 2,
+    attachments: 3
   },
   {
     id: '2',
@@ -20,7 +20,8 @@ const exampleDocuments: DocumentProps[] = [
     description: 'Prístupové údaje a informácie o všetkých finančných účtoch.',
     type: 'finance',
     lastUpdated: '10.4.2025',
-    recipients: 1
+    recipients: 1,
+    attachments: 1
   },
   {
     id: '3',
@@ -28,7 +29,8 @@ const exampleDocuments: DocumentProps[] = [
     description: 'Inštrukcie k získaniu prístupu ku krypto aktívam.',
     type: 'crypto',
     lastUpdated: '5.4.2025',
-    recipients: 1
+    recipients: 1,
+    attachments: 0
   },
   {
     id: '4',
@@ -36,7 +38,8 @@ const exampleDocuments: DocumentProps[] = [
     description: 'Zoznam kľúčových kontaktov pre núdzové situácie.',
     type: 'family',
     lastUpdated: '9.4.2025',
-    recipients: 3
+    recipients: 3,
+    attachments: 2
   },
   {
     id: '5',
@@ -44,7 +47,8 @@ const exampleDocuments: DocumentProps[] = [
     description: 'Čo robiť v prípade zdravotných komplikácií alebo iných núdzových situácií.',
     type: 'instructions',
     lastUpdated: '8.4.2025',
-    recipients: 2
+    recipients: 2,
+    attachments: 1
   }
 ];
 
@@ -69,6 +73,7 @@ const DocumentList = () => {
             type={doc.type}
             lastUpdated={doc.lastUpdated}
             recipients={doc.recipients}
+            attachments={doc.attachments}
           />
         ))}
       </div>

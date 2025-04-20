@@ -1,8 +1,15 @@
-
 export interface Recipient {
   id: string;
   name: string;
   email: string;
+}
+
+export interface FileAttachment {
+  id: string;
+  name: string;
+  type: string;
+  size: number;
+  url: string;
 }
 
 export interface Document {
@@ -15,6 +22,7 @@ export interface Document {
   recipients: Recipient[];
   createdAt: string;
   isEncrypted: boolean;
+  attachments: FileAttachment[];
 }
 
 export const typeLabels = {

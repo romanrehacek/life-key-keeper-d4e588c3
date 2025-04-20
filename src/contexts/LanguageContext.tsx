@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 type Language = {
@@ -272,7 +271,7 @@ const translations: TranslationsType = {
     pt: "Editor visual",
     hi: "विज़ुअल एडिटर",
     zh: "可视化编辑器",
-    ja: "ビジュアルエディタ",
+    ja: "ビジュ���ルエディタ",
   },
   "editor.markdownMode": {
     en: "Markdown",
@@ -300,7 +299,7 @@ const translations: TranslationsType = {
     hu: "Alapértelmezett",
     pl: "Domyślny",
     pt: "Padrão",
-    hi: "डिफ़ॉल्ट",
+    hi: "डिफॉल्ट",
     zh: "默认",
     ja: "デフォルト",
   },
@@ -421,7 +420,7 @@ const translations: TranslationsType = {
     pl: "Szablon zastosowany",
     pt: "Modelo aplicado",
     hi: "टेम्पलेट लागू किया गया",
-    zh: "已应用模板",
+    zh: "已应��模板",
     ja: "テンプレートが適用されました",
   },
   "document.edit.templateAppliedDescription": {
@@ -499,6 +498,66 @@ const translations: TranslationsType = {
     zh: "删除附件",
     ja: "添付ファイルを削除",
   },
+  "document.lastUpdated": {
+    en: "Last updated",
+    de: "Zuletzt aktualisiert",
+    fr: "Dernière mise à jour",
+    es: "Última actualización",
+    it: "Ultimo aggiornamento",
+    sk: "Aktualizované",
+    cs: "Aktualizováno",
+    hu: "Utoljára frissítve",
+    pl: "Ostatnia aktualizacja",
+    pt: "Última atualização",
+    hi: "आखरी अपडेट",
+    zh: "最后更新",
+    ja: "最終更新",
+  },
+  "document.recipients": {
+    en: "{count} recipients",
+    de: "{count} Empfänger",
+    fr: "{count} destinataires",
+    es: "{count} destinatarios",
+    it: "{count} destinatari",
+    sk: "{count} príjemcov",
+    cs: "{count} příjemců",
+    hu: "{count} címzett",
+    pl: "{count} odbiorców",
+    pt: "{count} destinatários",
+    hi: "{count} प्राप्तकर्ता",
+    zh: "{count} 收件人",
+    ja: "{count} 受信者",
+  },
+  "document.attachments": {
+    en: "{count} files",
+    de: "{count} Dateien",
+    fr: "{count} fichiers",
+    es: "{count} archivos",
+    it: "{count} file",
+    sk: "{count} súborov",
+    cs: "{count} souborů",
+    hu: "{count} fájl",
+    pl: "{count} plików",
+    pt: "{count} arquivos",
+    hi: "{count} फ़ाइलें",
+    zh: "{count} 文件",
+    ja: "{count} ファイル",
+  },
+  "document.list.title": {
+    en: "My Documents",
+    de: "Meine Dokumente",
+    fr: "Mes Documents",
+    es: "Mis Documentos",
+    it: "I miei Documenti",
+    sk: "Moje Dokumenty",
+    cs: "Moje Dokumenty",
+    hu: "Dokumentumaim",
+    pl: "Moje Dokumenty",
+    pt: "Meus Documentos",
+    hi: "मेरे दस्तावेज़",
+    zh: "我的文档",
+    ja: "マイドキュメント",
+  }
 };
 
 type LanguageContextType = {
