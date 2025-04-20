@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { 
   Bold, 
   Italic, 
@@ -52,9 +53,33 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const { t } = useLanguage();
   const [editorMode, setEditorMode] = useState<'visual' | 'markdown'>('visual');
   const [selection, setSelection] = useState<{ start: number; end: number }>({ start: 0, end: 0 });
+  const [visualContent, setVisualContent] = useState<string>("");
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+  const visualEditorRef = React.useRef<HTMLDivElement>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [attachments, setAttachments] = useState<FileAttachment[]>([]);
+
+  // Convert markdown to HTML for visual editor
+  useEffect(() => {
+    let html = value
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/__(.*?)__/g, '<u>$1</u>')
+      .replace(/`(.*?)`/g, '<code>$1</code>')
+      .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+      .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+      .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+      .replace(/^- (.*$)/gm, '<ul><li>$1</li></ul>')
+      .replace(/^[0-9]+\. (.*$)/gm, (match, p1) => {
+        const num = match.split('.')[0];
+        return `<ol start="${num}"><li>${p1}</li></ol>`;
+      });
+    
+    // Handle newlines
+    html = html.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+    
+    setVisualContent(html);
+  }, [value]);
 
   const handleTextSelection = () => {
     if (textAreaRef.current) {
@@ -66,31 +91,109 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const applyFormatting = (startTag: string, endTag: string = "") => {
-    if (textAreaRef.current) {
-      const textBefore = value.substring(0, selection.start);
-      const selectedText = value.substring(selection.start, selection.end);
-      const textAfter = value.substring(selection.end);
+    if (editorMode === 'visual') {
+      // Get selection from visual editor
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0) return;
       
+      const range = selection.getRangeAt(0);
+      const selectedText = range.toString();
+      
+      if (!selectedText) return;
+      
+      // Apply formatting based on tag
+      let formattedHtml = '';
       const finalEndTag = endTag || startTag;
-      const newText = `${textBefore}${startTag}${selectedText}${finalEndTag}${textAfter}`;
       
-      onChange(newText);
+      if (startTag === '**') {
+        formattedHtml = `<strong>${selectedText}</strong>`;
+      } else if (startTag === '*') {
+        formattedHtml = `<em>${selectedText}</em>`;
+      } else if (startTag === '__') {
+        formattedHtml = `<u>${selectedText}</u>`;
+      } else if (startTag === '`') {
+        formattedHtml = `<code>${selectedText}</code>`;
+      } else if (startTag === '# ') {
+        formattedHtml = `<h1>${selectedText}</h1>`;
+      } else if (startTag === '## ') {
+        formattedHtml = `<h2>${selectedText}</h2>`;
+      } else if (startTag === '### ') {
+        formattedHtml = `<h3>${selectedText}</h3>`;
+      } else if (startTag === '- ') {
+        formattedHtml = `<ul><li>${selectedText}</li></ul>`;
+      } else if (startTag === '1. ') {
+        formattedHtml = `<ol><li>${selectedText}</li></ol>`;
+      }
       
-      // Set focus back to textarea
-      setTimeout(() => {
-        if (textAreaRef.current) {
-          textAreaRef.current.focus();
-          textAreaRef.current.setSelectionRange(
-            selection.start + startTag.length,
-            selection.end + startTag.length
-          );
-        }
-      }, 0);
+      // Apply the formatting directly to the visual editor
+      document.execCommand('insertHTML', false, formattedHtml);
+      
+      // Update the markdown value from the visual content
+      if (visualEditorRef.current) {
+        const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
+        onChange(newMarkdown);
+      }
+    } else {
+      // Original markdown formatting logic
+      if (textAreaRef.current) {
+        const textBefore = value.substring(0, selection.start);
+        const selectedText = value.substring(selection.start, selection.end);
+        const textAfter = value.substring(selection.end);
+        
+        const finalEndTag = endTag || startTag;
+        const newText = `${textBefore}${startTag}${selectedText}${finalEndTag}${textAfter}`;
+        
+        onChange(newText);
+        
+        // Set focus back to textarea
+        setTimeout(() => {
+          if (textAreaRef.current) {
+            textAreaRef.current.focus();
+            textAreaRef.current.setSelectionRange(
+              selection.start + startTag.length,
+              selection.end + startTag.length
+            );
+          }
+        }, 0);
+      }
     }
   };
 
+  // Convert HTML back to markdown
+  const convertToMarkdown = (html: string): string => {
+    let markdown = html;
+    
+    // Replace HTML tags with markdown
+    markdown = markdown
+      .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
+      .replace(/<em>(.*?)<\/em>/g, '*$1*')
+      .replace(/<u>(.*?)<\/u>/g, '__$1__')
+      .replace(/<code>(.*?)<\/code>/g, '`$1`')
+      .replace(/<h1>(.*?)<\/h1>/g, '# $1')
+      .replace(/<h2>(.*?)<\/h2>/g, '## $1')
+      .replace(/<h3>(.*?)<\/h3>/g, '### $1')
+      .replace(/<ul><li>(.*?)<\/li><\/ul>/g, '- $1')
+      .replace(/<ol start="(\d+)?"><li>(.*?)<\/li><\/ol>/g, '$1. $2')
+      .replace(/<ol><li>(.*?)<\/li><\/ol>/g, '1. $1');
+    
+    // Handle breaks
+    markdown = markdown.replace(/<br><br>/g, '\n\n').replace(/<br>/g, '\n');
+    
+    return markdown;
+  };
+
   const applyTextColor = (color: string) => {
-    applyFormatting(`<span style="color: ${color}">`, '</span>');
+    if (editorMode === 'visual') {
+      document.execCommand('foreColor', false, color);
+      
+      // Update the markdown value
+      if (visualEditorRef.current) {
+        const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
+        onChange(newMarkdown);
+      }
+    } else {
+      applyFormatting(`<span style="color: ${color}">`, '</span>');
+    }
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,18 +223,35 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
   
   const insertImageLink = (attachment: FileAttachment) => {
-    if (textAreaRef.current) {
+    if (editorMode === 'visual') {
       const isImage = attachment.type.startsWith('image/');
-      const linkText = isImage 
-        ? `![${attachment.name}](${attachment.url})`
-        : `[${attachment.name}](${attachment.url})`;
       
-      const cursorPos = textAreaRef.current.selectionStart;
-      const textBefore = value.substring(0, cursorPos);
-      const textAfter = value.substring(cursorPos);
+      if (isImage) {
+        document.execCommand('insertImage', false, attachment.url);
+      } else {
+        const linkText = attachment.name;
+        document.execCommand('createLink', false, attachment.url);
+      }
       
-      const newText = `${textBefore}${linkText}${textAfter}`;
-      onChange(newText);
+      // Update the markdown value
+      if (visualEditorRef.current) {
+        const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
+        onChange(newMarkdown);
+      }
+    } else {
+      if (textAreaRef.current) {
+        const isImage = attachment.type.startsWith('image/');
+        const linkText = isImage 
+          ? `![${attachment.name}](${attachment.url})`
+          : `[${attachment.name}](${attachment.url})`;
+        
+        const cursorPos = textAreaRef.current.selectionStart;
+        const textBefore = value.substring(0, cursorPos);
+        const textAfter = value.substring(cursorPos);
+        
+        const newText = `${textBefore}${linkText}${textAfter}`;
+        onChange(newText);
+      }
     }
   };
 
@@ -140,23 +260,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     return <FileText className="h-4 w-4" />;
   };
 
-  const getDisplayValue = () => {
-    if (editorMode === 'visual') {
-      return value
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/__(.*?)__/g, '<u>$1</u>')
-        .replace(/`(.*?)`/g, '<code>$1</code>')
-        .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-        .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-        .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-        .replace(/^- (.*$)/gm, '• $1')
-        .replace(/^[0-9]+\. (.*$)/gm, (match, p1, offset) => {
-          const num = match.split('.')[0];
-          return `${num}. ${p1}`;
-        });
+  const handleVisualEditorChange = () => {
+    if (visualEditorRef.current) {
+      const markdown = convertToMarkdown(visualEditorRef.current.innerHTML);
+      onChange(markdown);
     }
-    return value;
   };
 
   const FormattingToolbar = () => (
@@ -306,13 +414,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           <FormattingToolbar />
           
           <div
-            className="min-h-[400px] font-mono text-sm p-4 border rounded-md"
-            dangerouslySetInnerHTML={{ __html: getDisplayValue() }}
+            ref={visualEditorRef}
+            className="min-h-[400px] p-4 border rounded-md overflow-auto"
+            dangerouslySetInnerHTML={{ __html: visualContent }}
             contentEditable
-            onInput={(e) => {
-              const content = e.currentTarget.innerText;
-              onChange(content);
-            }}
+            onInput={handleVisualEditorChange}
           />
         </TabsContent>
         

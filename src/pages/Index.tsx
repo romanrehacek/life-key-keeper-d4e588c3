@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -5,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShieldCheck, Key, CheckCircle, FileText, Users, Activity, ArrowRight } from "lucide-react";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const latestBlogPosts = [
   {
@@ -33,6 +35,7 @@ const latestBlogPosts = [
 const Index = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   const handleLogin = () => {
     toast({
@@ -55,10 +58,10 @@ const Index = () => {
                 <Key className="h-6 w-6 text-lifekey-accent" />
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Zabezpečte informácie pre svojich blízkych
+                {t("home.hero.title")}
               </h1>
               <p className="text-xl opacity-90 mb-8">
-                Životný kľúč sa postará, aby vaše dôležité dokumenty a informácie boli dostupné vašim bližným v prípade núdzovej situácie alebo dlhodobej neaktivity.
+                {t("home.hero.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -66,10 +69,10 @@ const Index = () => {
                   className="bg-white text-lifekey-blue hover:bg-lifekey-accent hover:text-lifekey-blue"
                   onClick={handleLogin}
                 >
-                  Začať teraz
+                  {t("home.button.getStarted")}
                 </Button>
                 <Button size="lg" variant="outline" className="border-white/30 hover:bg-white/20">
-                  Ako to funguje
+                  {t("home.button.howItWorks")}
                 </Button>
               </div>
             </div>
@@ -81,10 +84,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Praktické riešenie pre vás a vašich blízkych
+                {t("home.features.title")}
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                Zabezpečte, že vaši blízki budú pripravení na akúkoľvek situáciu s kompletnými informáciami.
+                {t("home.features.subtitle")}
               </p>
             </div>
             
@@ -93,12 +96,17 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <FileText className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Organizované dokumenty</h3>
+                <h3 className="text-xl font-semibold mb-3">{t("home.feature.documents")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Vytvorte kategorizované dokumenty s inštrukciami, prístupovými údajmi a pokynmi pre rôzne životné situácie.
+                  {t("home.feature.documents.description")}
                 </p>
                 <ul className="space-y-2">
-                  {['Domácnosť', 'Financie', 'Kryptomeny', 'Kontakty'].map((item, index) => (
+                  {[
+                    t("document.types.household"), 
+                    t("document.types.finance"), 
+                    t("document.types.crypto"), 
+                    t("document.types.family")
+                  ].map((item, index) => (
                     <li key={index} className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-lifekey-teal mr-2" />
                       <span>{item}</span>
@@ -111,9 +119,9 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <Activity className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Kontrola aktivity</h3>
+                <h3 className="text-xl font-semibold mb-3">{t("home.feature.activity")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Systém automaticky kontroluje vašu aktivitu a reaguje len v prípade dlhodobej neaktivity.
+                  {t("home.feature.activity.description")}
                 </p>
                 <ul className="space-y-2">
                   {['E-mailové overenia', 'Pravidelné kontroly', 'Automatické upozornenia', 'Nastaviteľné parametre'].map((item, index) => (
@@ -129,9 +137,9 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <Users className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Dôveryhodné kontakty</h3>
+                <h3 className="text-xl font-semibold mb-3">{t("home.feature.contacts")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Pridajte dôveryhodné osoby, ktoré dostanú prístup k vašim informáciám po splnení bezpečnostných podmienok.
+                  {t("home.feature.contacts.description")}
                 </p>
                 <ul className="space-y-2">
                   {['Selektívny prístup', 'Postupné odomknutie', 'Zadefinované postupy', 'Riadenie prístupov'].map((item, index) => (
@@ -151,10 +159,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Ako to funguje
+                {t("home.howItWorks.title")}
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                Jednoduchý proces, ktorý zabezpečí pokoj v duši pre vás aj vašich blízkych
+                {t("home.howItWorks.subtitle")}
               </p>
             </div>
             
@@ -162,18 +170,18 @@ const Index = () => {
               {[
                 {
                   step: '01',
-                  title: 'Vytvorte dokumenty',
-                  description: 'Vytvorte si dokumenty s dôležitými informáciami pomocou jednoduchého editora alebo pripravených šablón.'
+                  title: t("home.step.one"),
+                  description: t("home.step.one.description")
                 },
                 {
                   step: '02',
-                  title: 'Nastavte dôveryhodné kontakty',
-                  description: 'Pridajte kontakty, ktoré dostanú informácie, a nastavte pre každý kontakt prístupové práva.'
+                  title: t("home.step.two"),
+                  description: t("home.step.two.description")
                 },
                 {
                   step: '03',
-                  title: 'Potvrdzujte aktivitu',
-                  description: 'Pravidelne potvrdzujte svoju aktivitu. Ak sa dlhodobé neozviete, systém automaticky upozorní vaše kontakty.'
+                  title: t("home.step.three"),
+                  description: t("home.step.three.description")
                 }
               ].map((item, index) => (
                 <div key={index} className="relative flex items-center">
@@ -200,10 +208,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Najnovšie články
+                {t("home.blog.title")}
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                Prečítajte si naše najnovšie články o bezpečnosti a plánovaní budúcnosti
+                {t("home.blog.subtitle")}
               </p>
             </div>
 
@@ -237,7 +245,7 @@ const Index = () => {
             <div className="text-center mt-12">
               <Button asChild variant="outline">
                 <Link to="/blog">
-                  Zobraziť všetky články
+                  {t("home.blog.viewAll")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -254,10 +262,10 @@ const Index = () => {
                 <ShieldCheck className="h-6 w-6 text-lifekey-accent" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Zabezpečte pokoj v duši pre vás a vašich blízkych
+                {t("home.cta.title")}
               </h2>
               <p className="text-xl opacity-90 mb-8">
-                Začnite už dnes s bezplatnou verziou alebo získajte plnú funkcionalitu s prémiovým plánom.
+                {t("home.cta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -265,14 +273,14 @@ const Index = () => {
                   className="bg-white text-lifekey-blue hover:bg-lifekey-accent hover:text-lifekey-blue"
                   onClick={handleLogin}
                 >
-                  Vytvoriť účet zadarmo
+                  {t("home.cta.freeAccount")}
                 </Button>
                 <Button 
                   size="lg" 
                   variant="outline" 
                   className="border-white/30 hover:bg-white/20 text-white"
                 >
-                  Prémiové funkcie
+                  {t("home.cta.premium")}
                 </Button>
               </div>
             </div>

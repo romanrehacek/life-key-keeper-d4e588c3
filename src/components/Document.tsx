@@ -33,16 +33,18 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
 
   // Format recipient text based on count
   const getRecipientsText = () => {
+    if (recipients === 0) return "0";
     if (recipients === 1) return t("document.recipient.one");
-    else if (recipients > 1 && recipients < 5) return t(`document.recipient.few`);
-    else return t(`document.recipient.many`);
+    else if (recipients > 1 && recipients < 5) return `${recipients} ${t("document.recipient.few")}`;
+    else return `${recipients} ${t("document.recipient.many")}`;
   };
   
   // Format attachment text based on count
   const getAttachmentsText = () => {
+    if (attachments === 0) return "0";
     if (attachments === 1) return t("document.attachment.one");
-    else if (attachments > 1 && attachments < 5) return t(`document.attachment.few`);
-    else return t(`document.attachment.many`);
+    else if (attachments > 1 && attachments < 5) return `${attachments} ${t("document.attachment.few")}`;
+    else return `${attachments} ${t("document.attachment.many")}`;
   };
 
   return (

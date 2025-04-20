@@ -271,7 +271,7 @@ const translations: TranslationsType = {
     pt: "Editor visual",
     hi: "विज़ुअल एडिटर",
     zh: "可视化编辑器",
-    ja: "ビジュ�����ルエディタ",
+    ja: "ビジュアルエディタ",
   },
   "editor.markdownMode": {
     en: "Markdown",
@@ -420,7 +420,7 @@ const translations: TranslationsType = {
     pl: "Szablon zastosowany",
     pt: "Modelo aplicado",
     hi: "टेम्पलेट लागू किया गया",
-    zh: "已应���模板",
+    zh: "已应用模板",
     ja: "テンプレートが適用されました",
   },
   "document.edit.templateAppliedDescription": {
@@ -578,82 +578,177 @@ const translations: TranslationsType = {
     sk: "Vymazať dokument",
     cs: "Smazat dokument",
   },
-  "document.recipient.one": {
-    en: "1 recipient",
-    sk: "1 príjemca",
-    cs: "1 příjemce",
+  // Home page translations
+  "home.hero.title": {
+    en: "Secure information for your loved ones",
+    de: "Sichere Informationen für Ihre Lieben",
+    fr: "Sécurisez les informations pour vos proches",
+    es: "Información segura para sus seres queridos",
+    it: "Informazioni sicure per i tuoi cari",
+    sk: "Zabezpečte informácie pre svojich blízkych",
+    cs: "Zabezpečte informace pro své blízké",
+    hu: "Biztonságos információk szerettei számára",
+    pl: "Zabezpiecz informacje dla swoich bliskich",
+    pt: "Informações seguras para seus entes queridos",
+    hi: "अपने प्रियजनों के लिए सुरक्षित जानकारी",
+    zh: "为您的亲人提供安全信息",
+    ja: "愛する人のための安全な情報",
   },
-  "document.recipient.few": {
-    en: "{count} recipients",
-    sk: "{count} príjemcovia",
-    cs: "{count} příjemci",
+  "home.hero.subtitle": {
+    en: "Life Key ensures that your important documents and information are available to your loved ones in case of emergency or long-term inactivity.",
+    de: "Life Key sorgt dafür, dass Ihre wichtigen Dokumente und Informationen für Ihre Lieben im Notfall oder bei längerer Inaktivität verfügbar sind.",
+    fr: "Life Key garantit que vos documents et informations importants sont disponibles pour vos proches en cas d'urgence ou d'inactivité prolongée.",
+    es: "Life Key garantiza que sus documentos e información importantes estén disponibles para sus seres queridos en caso de emergencia o inactividad a largo plazo.",
+    it: "Life Key assicura che i tuoi documenti e le informazioni importanti siano disponibili per i tuoi cari in caso di emergenza o inattività a lungo termine.",
+    sk: "Životný kľúč sa postará, aby vaše dôležité dokumenty a informácie boli dostupné vašim bližným v prípade núdzovej situácie alebo dlhodobej neaktivity.",
+    cs: "Životní klíč se postará o to, aby vaše důležité dokumenty a informace byly dostupné vašim blízkým v případě nouzové situace nebo dlouhodobé nečinnosti.",
+    hu: "Az Életkulcs gondoskodik arról, hogy fontos dokumentumai és információi elérhetők legyenek szerettei számára vészhelyzet vagy hosszú távú inaktivitás esetén.",
+    pl: "Klucz Życia dba o to, aby ważne dokumenty i informacje były dostępne dla Twoich bliskich w sytuacji awaryjnej lub długotrwałej nieaktywności.",
+    pt: "A Chave da Vida garante que seus documentos e informações importantes estejam disponíveis para seus entes queridos em caso de emergência ou inatividade de longo prazo.",
+    hi: "लाइफ की यह सुनिश्चित करती है कि आपके महत्वपूर्ण दस्तावेज और जानकारी आपातकालीन स्थिति या लंबी अवधि की निष्क्रियता के मामले में आपके प्रियजनों के लिए उपलब्ध हों।",
+    zh: "生命密钥确保在紧急情况或长期不活动的情况下，您的重要文件和信息可供您的亲人使用。",
+    ja: "ライフキーは、緊急時や長期間の不活動の場合に、重要な文書や情報が愛する人に提供されることを保証します。",
   },
-  "document.recipient.many": {
-    en: "{count} recipients",
-    sk: "{count} príjemcov",
-    cs: "{count} příjemců",
+  "home.button.getStarted": {
+    en: "Get Started",
+    de: "Loslegen",
+    fr: "Commencer",
+    es: "Empezar",
+    it: "Iniziare",
+    sk: "Začať teraz",
+    cs: "Začít teď",
+    hu: "Kezdés",
+    pl: "Rozpocznij",
+    pt: "Começar",
+    hi: "शुरू करें",
+    zh: "开始使用",
+    ja: "始める",
   },
-  "document.attachment.one": {
-    en: "1 file",
-    sk: "1 súbor",
-    cs: "1 soubor",
+  "home.button.howItWorks": {
+    en: "How It Works",
+    de: "Wie es funktioniert",
+    fr: "Comment ça marche",
+    es: "Cómo funciona",
+    it: "Come funziona",
+    sk: "Ako to funguje",
+    cs: "Jak to funguje",
+    hu: "Hogyan működik",
+    pl: "Jak to działa",
+    pt: "Como funciona",
+    hi: "यह कैसे काम करता है",
+    zh: "它是如何工作的",
+    ja: "仕組み",
   },
-  "document.attachment.few": {
-    en: "{count} files",
-    sk: "{count} súbory",
-    cs: "{count} soubory",
+  "home.features.title": {
+    en: "Practical solution for you and your loved ones",
+    de: "Praktische Lösung für Sie und Ihre Lieben",
+    fr: "Solution pratique pour vous et vos proches",
+    es: "Solución práctica para usted y sus seres queridos",
+    it: "Soluzione pratica per te e i tuoi cari",
+    sk: "Praktické riešenie pre vás a vašich blízkych",
+    cs: "Praktické řešení pro vás a vaše blízké",
+    hu: "Praktikus megoldás Önnek és szeretteinek",
+    pl: "Praktyczne rozwiązanie dla Ciebie i Twoich bliskich",
+    pt: "Solução prática para você e seus entes queridos",
+    hi: "आपके और आपके प्रियजनों के लिए व्यावहारिक समाधान",
+    zh: "为您和您的亲人提供实用的解决方案",
+    ja: "あなたとあなたの大切な人のための実用的なソリューション",
   },
-  "document.attachment.many": {
-    en: "{count} files",
-    sk: "{count} súborov",
-    cs: "{count} souborů",
-  }
-};
-
-type LanguageContextType = {
-  language: string;
-  setLanguage: (lang: string) => void;
-  t: (key: string) => string;
-  languages: Language[];
-};
-
-const LanguageContext = createContext<LanguageContextType>({
-  language: "en",
-  setLanguage: () => {},
-  t: (key: string) => key,
-  languages: [],
-});
-
-export const useLanguage = () => useContext(LanguageContext);
-
-export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState(() => {
-    const savedLanguage = localStorage.getItem("lifekey-language");
-    return savedLanguage || navigator.language.split("-")[0] || "en";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("lifekey-language", language);
-  }, [language]);
-
-  const translate = (key: string): string => {
-    if (!translations[key]) {
-      return key;
-    }
-
-    return translations[key][language] || translations[key].en || key;
-  };
-
-  return (
-    <LanguageContext.Provider
-      value={{
-        language,
-        setLanguage,
-        t: translate,
-        languages,
-      }}
-    >
-      {children}
-    </LanguageContext.Provider>
-  );
-};
+  "home.features.subtitle": {
+    en: "Ensure that your loved ones are prepared for any situation with complete information.",
+    de: "Stellen Sie sicher, dass Ihre Lieben mit vollständigen Informationen auf jede Situation vorbereitet sind.",
+    fr: "Assurez-vous que vos proches sont préparés à toute situation avec des informations complètes.",
+    es: "Asegúrese de que sus seres queridos estén preparados para cualquier situación con información completa.",
+    it: "Assicurati che i tuoi cari siano preparati a qualsiasi situazione con informazioni complete.",
+    sk: "Zabezpečte, že vaši blízki budú pripravení na akúkoľvek situáciu s kompletnými informáciami.",
+    cs: "Zajistěte, aby vaši blízcí byli připraveni na jakoukoli situaci s kompletními informacemi.",
+    hu: "Gondoskodjon arról, hogy szerettei teljes információkkal felkészüljenek bármilyen helyzetre.",
+    pl: "Zapewnij, aby Twoi bliscy byli przygotowani na każdą sytuację z kompletnymi informacjami.",
+    pt: "Garanta que seus entes queridos estejam preparados para qualquer situação com informações completas.",
+    hi: "सुनिश्चित करें कि आपके प्रियजन पूर्ण जानकारी के साथ किसी भी स्थिति के लिए तैयार हैं।",
+    zh: "确保您的亲人有完整的信息准备应对任何情况。",
+    ja: "あなたの大切な人が完全な情報で、どんな状況にも備えられるようにしてください。",
+  },
+  "home.feature.documents": {
+    en: "Organized Documents",
+    de: "Organisierte Dokumente",
+    fr: "Documents organisés",
+    es: "Documentos organizados",
+    it: "Documenti organizzati",
+    sk: "Organizované dokumenty",
+    cs: "Organizované dokumenty",
+    hu: "Szervezett dokumentumok",
+    pl: "Zorganizowane dokumenty",
+    pt: "Documentos organizados",
+    hi: "संगठित दस्तावेज़",
+    zh: "组织文件",
+    ja: "整理された文書",
+  },
+  "home.feature.documents.description": {
+    en: "Create categorized documents with instructions, access information, and guidelines for various life situations.",
+    de: "Erstellen Sie kategorisierte Dokumente mit Anweisungen, Zugangsinformationen und Richtlinien für verschiedene Lebenssituationen.",
+    fr: "Créez des documents catégorisés avec des instructions, des informations d'accès et des directives pour diverses situations de la vie.",
+    es: "Cree documentos categorizados con instrucciones, información de acceso y pautas para diversas situaciones de la vida.",
+    it: "Crea documenti categorizzati con istruzioni, informazioni di accesso e linee guida per varie situazioni di vita.",
+    sk: "Vytvorte kategorizované dokumenty s inštrukciami, prístupovými údajmi a pokynmi pre rôzne životné situácie.",
+    cs: "Vytvořte kategorizované dokumenty s pokyny, přístupovými údaji a pokyny pro různé životní situace.",
+    hu: "Hozzon létre kategorizált dokumentumokat utasításokkal, hozzáférési információkkal és irányelvekkel különböző élethelyzetekre.",
+    pl: "Twórz skategoryzowane dokumenty z instrukcjami, informacjami dostępowymi i wytycznymi dla różnych sytuacji życiowych.",
+    pt: "Crie documentos categorizados com instruções, informações de acesso e diretrizes para várias situações da vida.",
+    hi: "विभिन्न जीवन परिस्थितियों के लिए निर्देशों, पहुंच जानकारी और दिशानिर्देशों के साथ श्रेणीबद्ध दस्तावेज़ बनाएं।",
+    zh: "为各种生活情况创建分类文件，包含说明、访问信息和指南。",
+    ja: "さまざまな生活状況に対する指示、アクセス情報、ガイドラインを含む分類されたドキュメントを作成します。",
+  },
+  "home.feature.activity": {
+    en: "Activity Monitoring",
+    de: "Aktivitätsüberwachung",
+    fr: "Surveillance de l'activité",
+    es: "Monitoreo de actividad",
+    it: "Monitoraggio dell'attività",
+    sk: "Kontrola aktivity",
+    cs: "Kontrola aktivity",
+    hu: "Tevékenység figyelése",
+    pl: "Monitorowanie aktywności",
+    pt: "Monitoramento de atividade",
+    hi: "गतिविधि निगरानी",
+    zh: "活动监控",
+    ja: "アクティビティ監視",
+  },
+  "home.feature.activity.description": {
+    en: "The system automatically monitors your activity and responds only in case of long-term inactivity.",
+    de: "Das System überwacht automatisch Ihre Aktivität und reagiert nur bei langfristiger Inaktivität.",
+    fr: "Le système surveille automatiquement votre activité et ne réagit qu'en cas d'inactivité prolongée.",
+    es: "El sistema monitorea automáticamente su actividad y responde solo en caso de inactividad a largo plazo.",
+    it: "Il sistema monitora automaticamente la tua attività e risponde solo in caso di inattività a lungo termine.",
+    sk: "Systém automaticky kontroluje vašu aktivitu a reaguje len v prípade dlhodobej neaktivity.",
+    cs: "Systém automaticky sleduje vaši aktivitu a reaguje pouze v případě dlouhodobé nečinnosti.",
+    hu: "A rendszer automatikusan figyeli az Ön tevékenységét, és csak hosszú távú inaktivitás esetén reagál.",
+    pl: "System automatycznie monitoruje twoją aktywność i reaguje tylko w przypadku długotrwałej nieaktywności.",
+    pt: "O sistema monitora automaticamente sua atividade e responde apenas em caso de inatividade de longo prazo.",
+    hi: "सिस्टम स्वचालित रूप से आपकी गतिविधि की निगरानी करता है और केवल दीर्घकालिक निष्क्रियता के मामले में प्रतिक्रिया देता है।",
+    zh: "系统会自动监控您的活动，并且只有在长期不活动的情况下才会响应。",
+    ja: "システムは自動的にあなたの活動を監視し、長期間の非アクティブな場合にのみ対応します。",
+  },
+  "home.feature.contacts": {
+    en: "Trusted Contacts",
+    de: "Vertrauenswürdige Kontakte",
+    fr: "Contacts de confiance",
+    es: "Contactos de confianza",
+    it: "Contatti fidati",
+    sk: "Dôveryhodné kontakty",
+    cs: "Důvěryhodné kontakty",
+    hu: "Megbízható kapcsolatok",
+    pl: "Zaufane kontakty",
+    pt: "Contatos confiáveis",
+    hi: "विश्वसनीय संपर्क",
+    zh: "可信联系人",
+    ja: "信頼できる連絡先",
+  },
+  "home.feature.contacts.description": {
+    en: "Add trusted people who will receive access to your information after meeting security conditions.",
+    de: "Fügen Sie vertrauenswürdige Personen hinzu, die nach Erfüllung der Sicherheitsbedingungen Zugriff auf Ihre Informationen erhalten.",
+    fr: "Ajoutez des personnes de confiance qui auront accès à vos informations après avoir rempli les conditions de sécurité.",
+    es: "Agregue personas de confianza que recibirán acceso a su información después de cumplir con las condiciones de seguridad.",
+    it: "Aggiungi persone fidate che riceveranno l'accesso alle tue informazioni dopo aver soddisfatto le condizioni di sicurezza.",
+    sk: "Pridajte dôveryhodné osoby, ktoré dostanú prístup k vašim informáciám po splnení bezpečnostných podmienok.",
+    cs: "Přidejte důvěryhodné osoby, které získají přístup k vašim informacím po splnění bezpečnostních podmínek.",
