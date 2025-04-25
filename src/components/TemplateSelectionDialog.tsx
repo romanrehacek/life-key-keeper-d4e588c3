@@ -34,14 +34,14 @@ const TemplatePreview: React.FC<TemplatePreviewProps> = ({ template, onSelect, o
           className="mr-2"
           onClick={() => onPreview(template)}
         >
-          {t("document.edit.preview")}
+          Náhľad
         </Button>
         <DialogClose asChild>
           <Button 
             size="sm"
             onClick={() => onSelect(template)}
           >
-            {t("document.edit.template")}
+            Použiť šablónu
           </Button>
         </DialogClose>
       </div>
@@ -81,11 +81,11 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
         </DialogTrigger>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{t("document.edit.template")}</DialogTitle>
+            <DialogTitle>Šablóna dokumentu</DialogTitle>
             <DialogDescription>
               {filteredTemplates.length > 0 
-                ? "Choose a template for your document" 
-                : "No templates available for this category"}
+                ? "Vyberte šablónu pre váš dokument" 
+                : "Pre túto kategóriu nie sú dostupné žiadne šablóny"}
             </DialogDescription>
           </DialogHeader>
           
@@ -102,7 +102,7 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
             </div>
           ) : (
             <p className="text-center py-8 text-muted-foreground">
-              No templates available for this category.
+              Pre túto kategóriu nie sú dostupné žiadne šablóny.
             </p>
           )}
         </DialogContent>
@@ -122,13 +122,13 @@ const TemplateSelectionDialog: React.FC<TemplateSelectionDialogProps> = ({
             </ScrollArea>
             <div className="flex justify-end gap-2 mt-4">
               <Button variant="outline" onClick={() => setPreviewTemplate(null)}>
-                {t("document.edit.cancel")}
+                Zrušiť
               </Button>
               <Button onClick={() => {
                 handleSelectTemplate(previewTemplate);
                 setPreviewTemplate(null);
               }}>
-                {t("document.edit.template")}
+                Použiť šablónu
               </Button>
             </div>
           </DialogContent>

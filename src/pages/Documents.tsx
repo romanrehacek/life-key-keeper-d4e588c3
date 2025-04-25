@@ -8,7 +8,7 @@ const Documents = () => {
   const { t } = useLanguage();
   
   return (
-    <PageTemplate title={t("document.list.title") || "My Documents"}>
+    <PageTemplate title="Moje dokumenty">
       <DocumentList />
     </PageTemplate>
   );

@@ -34,17 +34,17 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
   // Format recipient text based on count
   const getRecipientsText = () => {
     if (recipients === 0) return "0";
-    if (recipients === 1) return t("document.recipient.one");
-    else if (recipients > 1 && recipients < 5) return `${recipients} ${t("document.recipient.few")}`;
-    else return `${recipients} ${t("document.recipient.many")}`;
+    if (recipients === 1) return "1 príjemca";
+    else if (recipients > 1 && recipients < 5) return `${recipients} príjemcovia`;
+    else return `${recipients} príjemcov`;
   };
   
   // Format attachment text based on count
   const getAttachmentsText = () => {
     if (attachments === 0) return "0";
-    if (attachments === 1) return t("document.attachment.one");
-    else if (attachments > 1 && attachments < 5) return `${attachments} ${t("document.attachment.few")}`;
-    else return `${attachments} ${t("document.attachment.many")}`;
+    if (attachments === 1) return "1 príloha";
+    else if (attachments > 1 && attachments < 5) return `${attachments} prílohy`;
+    else return `${attachments} príloh`;
   };
 
   return (
@@ -56,11 +56,11 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
         <div className="flex justify-between items-start">
           <Badge variant="outline" className={cn("flex gap-1 items-center font-normal", typeColors[type])}>
             {typeIcons[type]}
-            {t(typeLabels[type])}
+            {typeLabels[type]}
           </Badge>
           <div className="flex items-center text-xs text-muted-foreground gap-1">
             <LockKeyhole className="h-3 w-3" />
-            {t("document.encrypted")}
+            Šifrované
           </div>
         </div>
         <CardTitle className="mt-2">{title}</CardTitle>
@@ -69,7 +69,7 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
       <CardContent className="pb-2">
         <div className="flex items-center text-xs text-muted-foreground gap-1">
           <CalendarClock className="h-3 w-3" />
-          {t("document.lastUpdated")}: {lastUpdated}
+          Aktualizované: {lastUpdated}
         </div>
         <div className="mt-2 flex gap-2">
           <Badge variant={recipients === 0 ? "destructive" : "secondary"} className="text-xs flex items-center gap-1">
@@ -87,14 +87,14 @@ const Document = ({ id, title, description, type, lastUpdated, recipients, attac
       <CardFooter className="flex justify-between pt-2">
         <Button variant="outline" size="sm" asChild>
           <Link to={`/document/${id}`}>
-            {t("document.open")}
+            Otvoriť
           </Link>
         </Button>
         <div className="flex gap-2">
-          <Button variant="ghost" size="icon" className="h-8 w-8" title={t("document.edit")}>
+          <Button variant="ghost" size="icon" className="h-8 w-8" title="Upraviť">
             <Edit className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" title={t("document.delete")}>
+          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" title="Vymazať">
             <Trash className="h-4 w-4" />
           </Button>
         </div>

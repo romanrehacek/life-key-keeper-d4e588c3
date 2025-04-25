@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { 
   Bold, 
@@ -59,7 +58,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [attachments, setAttachments] = useState<FileAttachment[]>([]);
 
-  // Convert markdown to HTML for visual editor
   useEffect(() => {
     let html = value
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -75,7 +73,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         return `<ol start="${num}"><li>${p1}</li></ol>`;
       });
     
-    // Handle newlines
     html = html.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
     
     setVisualContent(html);
@@ -92,7 +89,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   const applyFormatting = (startTag: string, endTag: string = "") => {
     if (editorMode === 'visual') {
-      // Get selection from visual editor
       const selection = window.getSelection();
       if (!selection || selection.rangeCount === 0) return;
       
@@ -101,7 +97,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       
       if (!selectedText) return;
       
-      // Apply formatting based on tag
       let formattedHtml = '';
       const finalEndTag = endTag || startTag;
       
@@ -125,16 +120,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         formattedHtml = `<ol><li>${selectedText}</li></ol>`;
       }
       
-      // Apply the formatting directly to the visual editor
       document.execCommand('insertHTML', false, formattedHtml);
       
-      // Update the markdown value from the visual content
       if (visualEditorRef.current) {
         const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
         onChange(newMarkdown);
       }
     } else {
-      // Original markdown formatting logic
       if (textAreaRef.current) {
         const textBefore = value.substring(0, selection.start);
         const selectedText = value.substring(selection.start, selection.end);
@@ -145,7 +137,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         
         onChange(newText);
         
-        // Set focus back to textarea
         setTimeout(() => {
           if (textAreaRef.current) {
             textAreaRef.current.focus();
@@ -159,11 +150,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     }
   };
 
-  // Convert HTML back to markdown
   const convertToMarkdown = (html: string): string => {
     let markdown = html;
     
-    // Replace HTML tags with markdown
     markdown = markdown
       .replace(/<strong>(.*?)<\/strong>/g, '**$1**')
       .replace(/<em>(.*?)<\/em>/g, '*$1*')
@@ -176,7 +165,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       .replace(/<ol start="(\d+)?"><li>(.*?)<\/li><\/ol>/g, '$1. $2')
       .replace(/<ol><li>(.*?)<\/li><\/ol>/g, '1. $1');
     
-    // Handle breaks
     markdown = markdown.replace(/<br><br>/g, '\n\n').replace(/<br>/g, '\n');
     
     return markdown;
@@ -186,7 +174,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     if (editorMode === 'visual') {
       document.execCommand('foreColor', false, color);
       
-      // Update the markdown value
       if (visualEditorRef.current) {
         const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
         onChange(newMarkdown);
@@ -200,8 +187,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     const files = e.target.files;
     if (!files || files.length === 0) return;
     
-    // Here we would normally upload the file to a server
-    // For now, we'll just create a URL and add to attachments
     const newAttachments = Array.from(files).map(file => ({
       id: Math.random().toString(36).substring(2, 11),
       name: file.name,
@@ -212,7 +197,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     
     setAttachments([...attachments, ...newAttachments]);
     
-    // Reset the input to allow selecting the same file again
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -233,7 +217,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         document.execCommand('createLink', false, attachment.url);
       }
       
-      // Update the markdown value
       if (visualEditorRef.current) {
         const newMarkdown = convertToMarkdown(visualEditorRef.current.innerHTML);
         onChange(newMarkdown);
@@ -373,27 +356,27 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         <DropdownMenuContent>
           <DropdownMenuItem onClick={() => applyTextColor('inherit')}>
             <div className="w-4 h-4 mr-2 border border-gray-300 bg-transparent"></div>
-            {t("editor.default")}
+            Predvolená
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => applyTextColor('red')}>
             <div className="w-4 h-4 mr-2 bg-red-500 rounded-sm"></div>
-            {t("editor.red")}
+            Červená
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => applyTextColor('blue')}>
             <div className="w-4 h-4 mr-2 bg-blue-500 rounded-sm"></div>
-            {t("editor.blue")}
+            Modrá
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => applyTextColor('green')}>
             <div className="w-4 h-4 mr-2 bg-green-500 rounded-sm"></div>
-            {t("editor.green")}
+            Zelená
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => applyTextColor('yellow')}>
             <div className="w-4 h-4 mr-2 bg-yellow-500 rounded-sm"></div>
-            {t("editor.yellow")}
+            Žltá
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => applyTextColor('purple')}>
             <div className="w-4 h-4 mr-2 bg-purple-500 rounded-sm"></div>
-            {t("editor.purple")}
+            Fialová
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -406,8 +389,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     <div className={`flex flex-col space-y-2 ${className}`}>
       <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'visual' | 'markdown')}>
         <TabsList className="mb-2">
-          <TabsTrigger value="visual">{t("editor.visualMode")}</TabsTrigger>
-          <TabsTrigger value="markdown">{t("editor.markdownMode")}</TabsTrigger>
+          <TabsTrigger value="visual">Vizuálny režim</TabsTrigger>
+          <TabsTrigger value="markdown">Markdown režim</TabsTrigger>
         </TabsList>
         
         <TabsContent value="visual" className="space-y-2">
@@ -438,16 +421,16 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       
       <div className="flex flex-col space-y-2 border-t pt-3 mt-3">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-medium">{t("document.edit.attachments")}</h4>
+          <h4 className="text-sm font-medium">Prílohy</h4>
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={() => fileInputRef.current?.click()}
-            title={t("document.edit.attachFile")}
+            title="Priložiť súbor"
           >
             <Paperclip className="h-4 w-4 mr-1" />
-            {t("document.edit.attachFile")}
+            Priložiť súbor
           </Button>
           <input 
             type="file"
@@ -474,7 +457,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     size="sm"
                     className="h-6 w-6 p-0"
                     onClick={() => insertImageLink(attachment)}
-                    title={t("document.edit.insertIntoDocument")}
+                    title="Vložiť do dokumentu"
                   >
                     <Paperclip className="h-3 w-3" />
                   </Button>
@@ -484,7 +467,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
                     size="sm"
                     className="h-6 w-6 p-0 text-destructive hover:text-destructive/90"
                     onClick={() => removeAttachment(attachment.id)}
-                    title={t("document.edit.removeAttachment")}
+                    title="Odstrániť prílohu"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>

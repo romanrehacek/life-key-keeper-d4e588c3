@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -51,24 +52,24 @@ const ContactPage = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     toast({
-      title: t('contact.form.success'),
-      description: t('contact.form.successMessage'),
+      title: "Kontaktný formulár odoslaný",
+      description: "Ďakujeme za vašu správu. Budeme vás kontaktovať čo najskôr.",
     });
     form.reset();
   }
   
   return (
-    <PageTemplate title={t('contact.title')}>
+    <PageTemplate title="Kontakt">
       <Helmet>
-        <title>{t('contact.title')} | Životný kľúč</title>
-        <meta name="description" content={t('contact.subtitle')} />
+        <title>Kontakt | Životný kľúč</title>
+        <meta name="description" content="Kontaktujte nás s akýmikoľvek otázkami alebo požiadavkami." />
       </Helmet>
     
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h1 className="text-3xl font-bold mb-6">{t('contact.title')}</h1>
-            <p className="text-muted-foreground mb-8">{t('contact.subtitle')}</p>
+            <h1 className="text-3xl font-bold mb-6">Kontakt</h1>
+            <p className="text-muted-foreground mb-8">Kontaktujte nás s akýmikoľvek otázkami alebo požiadavkami.</p>
             
             <div className="space-y-6">
               <div className="flex items-start">
@@ -106,18 +107,18 @@ const ContactPage = () => {
             </div>
             
             <div className="mt-12">
-              <h3 className="font-semibold mb-2">{t('contact.office')}</h3>
+              <h3 className="font-semibold mb-2">Otváracie hodiny kancelárie</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>{t('contact.workdays')}</div>
+                <div>Pracovné dni</div>
                 <div>9:00 - 17:00</div>
-                <div>{t('contact.weekend')}</div>
-                <div>{t('contact.closed')}</div>
+                <div>Víkendy</div>
+                <div>Zatvorené</div>
               </div>
             </div>
           </div>
           
           <div className="bg-card border p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold mb-6">{t('contact.form.submit')}</h2>
+            <h2 className="text-xl font-semibold mb-6">Odoslať správu</h2>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
@@ -125,9 +126,9 @@ const ContactPage = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('contact.form.name')}</FormLabel>
+                      <FormLabel>Meno</FormLabel>
                       <FormControl>
-                        <Input placeholder={t('contact.form.name')} {...field} />
+                        <Input placeholder="Vaše meno" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -139,7 +140,7 @@ const ContactPage = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('contact.form.email')}</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input type="email" placeholder="vas@email.sk" {...field} />
                       </FormControl>
@@ -153,7 +154,7 @@ const ContactPage = () => {
                   name="subject"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('contact.form.subject')}</FormLabel>
+                      <FormLabel>Predmet</FormLabel>
                       <FormControl>
                         <Input placeholder="O čom nám chcete napísať?" {...field} />
                       </FormControl>
@@ -167,7 +168,7 @@ const ContactPage = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>{t('contact.form.message')}</FormLabel>
+                      <FormLabel>Správa</FormLabel>
                       <FormControl>
                         <Textarea 
                           placeholder="Napíšte vašu správu..." 
@@ -181,7 +182,7 @@ const ContactPage = () => {
                 />
                 
                 <Button type="submit" className="bg-lifekey-teal hover:bg-lifekey-blue w-full">
-                  {t('contact.form.submit')}
+                  Odoslať správu
                 </Button>
                 
                 <p className="text-xs text-muted-foreground text-center">

@@ -38,7 +38,7 @@ const DocumentContent = ({ document, showSensitiveData, onShowContent }: Documen
       
       {document.attachments && document.attachments.length > 0 && showSensitiveData && (
         <div className="mt-6 border-t pt-4">
-          <h4 className="text-sm font-medium mb-2">{t("document.attachments")}</h4>
+          <h4 className="text-sm font-medium mb-2">Prílohy</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {document.attachments.map(attachment => (
               <div key={attachment.id} className="flex items-center justify-between p-2 border rounded">

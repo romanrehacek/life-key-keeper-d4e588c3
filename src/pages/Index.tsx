@@ -58,10 +58,10 @@ const Index = () => {
                 <Key className="h-6 w-6 text-lifekey-accent" />
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                {t("home.hero.title")}
+                Chráňte informácie pre vašich blízkych
               </h1>
               <p className="text-xl opacity-90 mb-8">
-                {t("home.hero.subtitle")}
+                Bezpečne uchovávajte dôležité údaje a dokumenty pre prípad núdze
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -69,10 +69,10 @@ const Index = () => {
                   className="bg-white text-lifekey-blue hover:bg-lifekey-accent hover:text-lifekey-blue"
                   onClick={handleLogin}
                 >
-                  {t("home.button.getStarted")}
+                  Vytvoriť účet
                 </Button>
                 <Button size="lg" variant="outline" className="border-white/30 hover:bg-white/20">
-                  {t("home.button.howItWorks")}
+                  Ako to funguje
                 </Button>
               </div>
             </div>
@@ -84,10 +84,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t("home.features.title")}
+                Všetko potrebné na jednom mieste
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                {t("home.features.subtitle")}
+                Naša platforma poskytuje komplexné riešenie pre uchovávanie a zdieľanie dôležitých informácií s vašimi blízkymi.
               </p>
             </div>
             
@@ -96,16 +96,16 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <FileText className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{t("home.feature.documents")}</h3>
+                <h3 className="text-xl font-semibold mb-3">Bezpečné dokumenty</h3>
                 <p className="text-muted-foreground mb-4">
-                  {t("home.feature.documents.description")}
+                  Vytvorte a uchovávajte kľúčové informácie v šifrovaných dokumentoch.
                 </p>
                 <ul className="space-y-2">
                   {[
-                    t("document.types.household"), 
-                    t("document.types.finance"), 
-                    t("document.types.crypto"), 
-                    t("document.types.family")
+                    "Domácnosť", 
+                    "Financie", 
+                    "Kryptomeny", 
+                    "Rodina"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-lifekey-teal mr-2" />
@@ -119,9 +119,9 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <Activity className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{t("home.feature.activity")}</h3>
+                <h3 className="text-xl font-semibold mb-3">Overenie aktivity</h3>
                 <p className="text-muted-foreground mb-4">
-                  {t("home.feature.activity.description")}
+                  Systém automaticky sleduje vašu aktivitu a reaguje podľa nastavených parametrov.
                 </p>
                 <ul className="space-y-2">
                   {['E-mailové overenia', 'Pravidelné kontroly', 'Automatické upozornenia', 'Nastaviteľné parametre'].map((item, index) => (
@@ -137,9 +137,9 @@ const Index = () => {
                 <div className="rounded-full w-12 h-12 flex items-center justify-center bg-lifekey-teal/10 text-lifekey-teal mb-6">
                   <Users className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{t("home.feature.contacts")}</h3>
+                <h3 className="text-xl font-semibold mb-3">Správa kontaktov</h3>
                 <p className="text-muted-foreground mb-4">
-                  {t("home.feature.contacts.description")}
+                  Definujte kto, kedy a k akým informáciám bude mať prístup.
                 </p>
                 <ul className="space-y-2">
                   {['Selektívny prístup', 'Postupné odomknutie', 'Zadefinované postupy', 'Riadenie prístupov'].map((item, index) => (
@@ -159,10 +159,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t("home.howItWorks.title")}
+                Ako to funguje
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                {t("home.howItWorks.subtitle")}
+                Nastavenie služby Životný kľúč je jednoduché a intuitívne. Začnite už dnes!
               </p>
             </div>
             
@@ -170,18 +170,18 @@ const Index = () => {
               {[
                 {
                   step: '01',
-                  title: t("home.step.one"),
-                  description: t("home.step.one.description")
+                  title: 'Vytvorte účet',
+                  description: 'Zaregistrujte sa a nastavte prístupové údaje a bezpečnostné prvky.'
                 },
                 {
                   step: '02',
-                  title: t("home.step.two"),
-                  description: t("home.step.two.description")
+                  title: 'Pridajte dokumenty',
+                  description: 'Vytvorte dokumenty s dôležitými informáciami pre vaše kontakty.'
                 },
                 {
                   step: '03',
-                  title: t("home.step.three"),
-                  description: t("home.step.three.description")
+                  title: 'Definujte kontakty',
+                  description: 'Určite kto a za akých okolností dostane prístup k vašim údajom.'
                 }
               ].map((item, index) => (
                 <div key={index} className="relative flex items-center">
@@ -208,10 +208,10 @@ const Index = () => {
           <div className="container-lg">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t("home.blog.title")}
+                Najnovšie články
               </h2>
               <p className="text-xl text-muted-foreground mx-auto max-w-3xl">
-                {t("home.blog.subtitle")}
+                Prečítajte si naše tipy a rady, ako sa lepšie pripraviť na všetky životné situácie.
               </p>
             </div>
 
@@ -245,7 +245,7 @@ const Index = () => {
             <div className="text-center mt-12">
               <Button asChild variant="outline">
                 <Link to="/blog">
-                  {t("home.blog.viewAll")}
+                  Zobraziť všetky články
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -262,10 +262,10 @@ const Index = () => {
                 <ShieldCheck className="h-6 w-6 text-lifekey-accent" />
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                {t("home.cta.title")}
+                Zabezpečte svoje informácie už dnes
               </h2>
               <p className="text-xl opacity-90 mb-8">
-                {t("home.cta.subtitle")}
+                Začnite bezplatne a neskôr si môžete vybrať plán, ktorý najlepšie vyhovuje vašim potrebám.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -273,14 +273,14 @@ const Index = () => {
                   className="bg-white text-lifekey-blue hover:bg-lifekey-accent hover:text-lifekey-blue"
                   onClick={handleLogin}
                 >
-                  {t("home.cta.freeAccount")}
+                  Vytvoriť bezplatný účet
                 </Button>
                 <Button 
                   size="lg" 
                   variant="outline" 
                   className="border-white/30 hover:bg-white/20 text-white"
                 >
-                  {t("home.cta.premium")}
+                  Premium funkcie
                 </Button>
               </div>
             </div>

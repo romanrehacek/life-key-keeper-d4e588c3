@@ -27,8 +27,8 @@ const DocumentEdit = () => {
   
   const handleSave = () => {
     toast({
-      title: t("document.edit.saved"),
-      description: t("document.edit.savedDescription")
+      title: "Dokument uložený",
+      description: "Dokument bol úspešne uložený."
     });
     navigate(`/document/${id}`);
   };
@@ -40,26 +40,26 @@ const DocumentEdit = () => {
   const handleSelectTemplate = (template: DocumentTemplate) => {
     setDocumentContent(template.content);
     toast({
-      title: t("document.edit.templateApplied"),
-      description: `${t("document.edit.templateAppliedDescription")} "${template.title}"`
+      title: "Šablóna aplikovaná",
+      description: `Šablóna "${template.title}" bola úspešne aplikovaná.`
     });
   };
 
   return (
-    <PageTemplate title={t("document.edit.title")}>
+    <PageTemplate title="Úprava dokumentu">
       <div className="max-w-4xl mx-auto">
         <Link to={`/document/${id}`} className="inline-flex items-center text-primary hover:underline mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          {t("common.back")}
+          Späť
         </Link>
 
         <Card>
           <CardHeader>
-            <h2 className="text-2xl font-semibold">{t("document.edit.title")}</h2>
+            <h2 className="text-2xl font-semibold">Úprava dokumentu</h2>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-2">
-              <Label htmlFor="title">{t("document.edit.name")}</Label>
+              <Label htmlFor="title">Názov</Label>
               <Input 
                 id="title" 
                 value={documentTitle} 
@@ -68,7 +68,7 @@ const DocumentEdit = () => {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="description">{t("document.edit.description")}</Label>
+              <Label htmlFor="description">Popis</Label>
               <Input 
                 id="description" 
                 value={documentDescription} 
@@ -77,18 +77,18 @@ const DocumentEdit = () => {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="type">{t("document.edit.type")}</Label>
+              <Label htmlFor="type">Typ</Label>
               <div className="flex gap-2">
                 <Select value={documentType} onValueChange={setDocumentType}>
                   <SelectTrigger className="flex-1">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="household">{t("document.types.household")}</SelectItem>
-                    <SelectItem value="finance">{t("document.types.finance")}</SelectItem>
-                    <SelectItem value="crypto">{t("document.types.crypto")}</SelectItem>
-                    <SelectItem value="family">{t("document.types.family")}</SelectItem>
-                    <SelectItem value="instructions">{t("document.types.instructions")}</SelectItem>
+                    <SelectItem value="household">Domácnosť</SelectItem>
+                    <SelectItem value="finance">Financie</SelectItem>
+                    <SelectItem value="crypto">Kryptomeny</SelectItem>
+                    <SelectItem value="family">Rodina</SelectItem>
+                    <SelectItem value="instructions">Inštrukcie</SelectItem>
                   </SelectContent>
                 </Select>
                 
@@ -96,13 +96,13 @@ const DocumentEdit = () => {
                   selectedCategory={documentType}
                   onSelectTemplate={handleSelectTemplate}
                 >
-                  <Button variant="outline">{t("document.edit.template")}</Button>
+                  <Button variant="outline">Použiť šablónu</Button>
                 </TemplateSelectionDialog>
               </div>
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="content">{t("document.edit.content")}</Label>
+              <Label htmlFor="content">Obsah</Label>
               <RichTextEditor 
                 value={documentContent} 
                 onChange={setDocumentContent} 
@@ -111,10 +111,10 @@ const DocumentEdit = () => {
           </CardContent>
           <CardFooter className="flex justify-between">
             <Button variant="outline" onClick={handleCancel}>
-              {t("document.edit.cancel")}
+              Zrušiť
             </Button>
             <Button className="bg-primary hover:bg-primary/90" onClick={handleSave}>
-              {t("document.edit.save")}
+              Uložiť
             </Button>
           </CardFooter>
         </Card>
